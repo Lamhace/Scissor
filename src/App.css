@@ -1,0 +1,55 @@
+.hero {
+    background-color: rgb(252, 255, 252);
+}
+
+.accordion {
+    width: 1000px;
+}
+
+@media screen and (max-width: 1023px) {
+    .navMenu {
+        display: none;
+    }
+
+    .openNav,
+    .closeNav {
+        display: block;
+    }
+
+    .hideOpenNav,
+    .hideCloseNav {
+        display: none;
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .accordion {
+        width: 850px;
+    }
+    .navModal{
+        display: none;
+    }
+}
+@media (min-width: 768px) {
+    .accordion {
+        width: 700px;
+    }
+}
+@media (min-width: 640px) {
+    .accordion {
+        width: 600px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .whyScissor {
+        width: 1400px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .whyScissor {
+        width: 1250px;
+    }
+}
