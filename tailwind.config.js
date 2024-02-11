@@ -9,13 +9,18 @@ module.exports = {
         primary: '#141414',
         secondary: '#005AE2',
         tertiary: '#FFFFFF',
-        lightblue: '',  
-        deepblue: '#1d2951' 
+        lightblue: '',
+        deepblue: '#1d2951'
       },
       fontFamily: {
         family: ['Roboto', 'sans-serif'],
       },
+      screens: {
+        'ls': '450px',
+        'xs': '350px'
+      }
     },
   },
   plugins: [],
 }
+

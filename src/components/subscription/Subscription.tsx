@@ -20,7 +20,7 @@ export default function Subscription() {
                 <div className='shadow-md w-fit pt-5 lg:pb-7 sm:pb-5 xl:pl-20 md:pl-14 sm:pl-10 xl:pr-12 md:pr-9 sm:pr-14 border border-blue-300 lg:rounded-l-2xl lg:rounded-r-none sm:rounded-2xl'>
                     {BasicPlan.map((item) => {
                         return (
-                            <div className=''>
+                            <div className='' key={item.title}>
                                 <div className='xl:text-2xl lg:text-xl md:text-lg sm:text-base font-semibold lg:mb-6 md:mb-3'>{item.title}</div>
                                 <div className='xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-bold mb-4'>{item.price}</div>
                                 <div className=' xl:text-xl lg:text-lg md:text-base sm:text-sm font-semibold md:mb-7 sm:mb-5'>{item.description}</div>
@@ -44,22 +44,30 @@ export default function Subscription() {
                 <div className='w-fit lg:pt-12 sm:pt-5 lg:pb-32 sm:pb-5 xl:pl-16 lg:pl-14 sm:pl-10 xl:pr-20 lg:pr-16 sm:pr-10 text-tertiary bg-deepblue rounded-2xl'>
                     {ProfessionalPlan.map((item) => {
                         return (
-                            <div className=''>
-                                <div className='xl:text-2xl lg:text-xl md:text-lg sm:text-base font-semibold lg:mb-6 md:mb-3 '>{item.title}</div>
-                                <div className='xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-bold mb-4'>{item.price}</div>
-                                <div className='xl:text-xl lg:text-lg md:text-base sm:text-sm font-semibold md:mb-7 sm:mb-5'>{item.description}</div>
-                                <div className=''>
-                                    {item.features.map((item) => {
-                                        return (
-                                            <div className='flex items-center font-medium lg:text-base md:text-sm sm:text-xs gap-2 lg:mb-7 md:mb-6 sm:mb-5'>
-                                                <span><BsCheck2Circle className='font-medium text-lg md:text-base sm:text-sm ' /></span>
-                                                <div className=''>{item.feature}</div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
+                          <div className="" key={item.title}>
+                            <div className="xl:text-2xl lg:text-xl md:text-lg sm:text-base font-semibold lg:mb-6 md:mb-3 ">
+                              {item.title}
                             </div>
-                        )
+                            <div className="xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-bold mb-4">
+                              {item.price}
+                            </div>
+                            <div className="xl:text-xl lg:text-lg md:text-base sm:text-sm font-semibold md:mb-7 sm:mb-5">
+                              {item.description}
+                            </div>
+                            <div className="">
+                              {item.features.map((item) => {
+                                return (
+                                  <div className="flex items-center font-medium lg:text-base md:text-sm sm:text-xs gap-2 lg:mb-7 md:mb-6 sm:mb-5">
+                                    <span>
+                                      <BsCheck2Circle className="font-medium text-lg md:text-base sm:text-sm " />
+                                    </span>
+                                    <div className="">{item.feature}</div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
                     })} 
                 </div>
 
@@ -71,22 +79,30 @@ export default function Subscription() {
                 <div className='shadow-md w-fit  border pt-5 lg:pb-7 sm:pb-5 xl:pl-16 md:pl-12 sm:pl-9  xl:pr-10 md:pr-8 sm:pr-12 border-blue-300 lg:rounded-r-2xl lg:rounded-l-none sm:rounded-2xl'>
                     {TeamsPlan.map((item) => {
                         return (
-                            <div className=''>
-                                <div className='xl:text-2xl lg:text-xl md:text-lg sm:text-base font-semibold lg:mb-6 md:mb-3'>{item.title}</div>
-                                <div className='xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-bold mb-4'>{item.price}</div>
-                                <div className='xl:text-xl lg:text-lg md:text-base sm:text-sm font-semibold md:mb-7 sm:mb-5'>{item.description}</div>
-                                <div className=''>
-                                    {item.features.map((item) => {
-                                        return (
-                                            <div className='flex items-center font-medium lg:text-base md:text-sm sm:text-xs gap-2 lg:mb-7 md:mb-6 sm:mb-5'>
-                                                <span ><BsCheck2Circle className=' font-medium text-lg md:text-base sm:text-xs text-secondary' /></span>
-                                                <div className=''>{item.feature}</div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
+                          <div className="" key={item.title}>
+                            <div className="xl:text-2xl lg:text-xl md:text-lg sm:text-base font-semibold lg:mb-6 md:mb-3">
+                              {item.title}
                             </div>
-                        )
+                            <div className="xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-bold mb-4">
+                              {item.price}
+                            </div>
+                            <div className="xl:text-xl lg:text-lg md:text-base sm:text-sm font-semibold md:mb-7 sm:mb-5">
+                              {item.description}
+                            </div>
+                            <div className="">
+                              {item.features.map((item) => {
+                                return (
+                                  <div className="flex items-center font-medium lg:text-base md:text-sm sm:text-xs gap-2 lg:mb-7 md:mb-6 sm:mb-5">
+                                    <span>
+                                      <BsCheck2Circle className=" font-medium text-lg md:text-base sm:text-xs text-secondary" />
+                                    </span>
+                                    <div className="">{item.feature}</div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
                     })}
                 </div>
             </div>

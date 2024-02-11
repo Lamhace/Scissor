@@ -15,7 +15,7 @@ export default function Accordion() {
     }
   };
   return (
-    <div className=' flex flex-col items-center justify-center' id='faq'>
+    <div className=' flex flex-col items-center justify-center transition-all duration-1000' id='faq'>
       <h1 className=' xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl font-bold lg:mb-16 sm:mb-10'>FAQs</h1>
       <div className=''>
         {FaqData.map((item, index) => (
@@ -23,12 +23,12 @@ export default function Accordion() {
             <div className='accordion'>
               <div className=' flex lg:mb-5 md:mb-4 sm:mb-3 mt-3 items-center justify-between'>
                 <div className='xl:text-lg lg:text-base sm:text-sm lg:font-semibold md:font-medium'>{item.question}</div>
-                <div onClick={() => toggleAccordion(index)} className=' xl:text-xl lg:text-lg md:text-base lg:font-semibold md:font-medium'>
+                <div onClick={() => toggleAccordion(index)} className=' xl:text-xl lg:text-lg md:text-base lg:font-semibold md:font-medium transition-all duration-300'>
                   {openedIndex === index ? <AiOutlineMinus /> : <AiOutlinePlus />}
                 </div>
               </div>
               {openedIndex === index && (
-                <div className=' xl:mb-3 lg:mb-2 xl:text-sm sm:text-xs  lg:font-medium sm:font-normal'>{item.answer}</div>
+                <div className=' xl:mb-3 lg:mb-2 xl:text-sm sm:text-xs  lg:font-medium sm:font-normal transition-all duration-200'>{item.answer}</div>
               )}
               <hr />
             </div>

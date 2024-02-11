@@ -6,41 +6,18 @@
     width: 1000px;
 }
 
-@media screen and (max-width: 1023px) {
-    .navMenu {
-        display: none;
-    }
-
-    .openNav,
-    .closeNav {
-        display: block;
-    }
-
-    .hideOpenNav,
-    .hideCloseNav {
-        display: none;
-    }
-}
 
 
-@media (min-width: 1024px) {
-    .accordion {
-        width: 850px;
-    }
-    .navModal{
-        display: none;
-    }
-}
-@media (min-width: 768px) {
-    .accordion {
-        width: 700px;
-    }
-}
-@media (min-width: 640px) {
-    .accordion {
-        width: 600px;
-    }
-}
+
+
+
+
+
+
+
+
+
+
 
 @media (min-width: 1280px) {
     .whyScissor {
@@ -48,8 +25,98 @@
     }
 }
 
+
+
+
+
+
 @media (min-width: 1024px) {
     .whyScissor {
         width: 1250px;
+    }
+
+    .accordion {
+        width: 850px;
+    }
+
+    .navModal {
+        opacity: 0;
+    }
+        
+}
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 1023px) {
+    .navMenu {
+        opacity: 0;
+    }
+
+    .openNav,
+    .closeNav {
+        opacity: 1;
+    }
+
+    .hideOpenNav,
+    .hideCloseNav {
+        opacity: 0;
+    }
+        
+}
+
+
+
+
+
+
+
+
+@media (min-width: 768px) {
+    .accordion {
+        width: 700px;
+    }
+        
+
+}
+
+
+
+
+
+
+
+
+
+@media (min-width: 640px) {
+    .accordion {
+        width: 600px;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 350px) {
+
+
+    input::placeholder {
+        font-size: 0.8rem;
     }
 }

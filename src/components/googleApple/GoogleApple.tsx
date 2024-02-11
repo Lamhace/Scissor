@@ -36,10 +36,20 @@ export default function GoogleApple() {
 
 
   return (
-    <div className='' >
-      <div className=' font-medium text-gray-500 mb-3'>Proceed with:</div>
-      <div className='flex gap-2 items-center justify-center text-tertiary bg-secondary py-2 px-6 rounded-lg hover:cursor-pointer mb-12' onClick={continueWithGoogle} ><span><img src={GoogleLogo} alt="Logo" /></span> <span>Google</span></div>
+    <div className="">
+      <div className=" xs:font-light ls:font-normal sm:font-medium text-gray-500 mb-3">
+        Proceed with:
+      </div>
+      <div
+        className="flex gap-2 items-center justify-center text-tertiary bg-secondary xs:py-1 sm:py-2 xs:px-4 ls:px-5 sm:px-6 rounded-lg hover:cursor-pointer mb-12"
+        onClick={continueWithGoogle}
+      >
+        <span>
+          <img src={GoogleLogo} alt="Logo" />
+        </span>
+        <span>Google</span>
+      </div>
     </div>
-  )
+  );
 }
 
