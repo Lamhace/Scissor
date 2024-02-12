@@ -107,7 +107,12 @@
 
 
 
-
+@media only screen and (min-width: 350px) and (max-width: 639px){
+.accordion {
+        width: 100%;
+        padding: 5px;
+    }
+}
 
 
 
