@@ -30,7 +30,7 @@ export default function Trim() {
 
 
     return (
-      <div className=" xl:mt-32 lg:mt-28 md:mt-24 sm:mt-20 xs:mt-16 xl:py-24 lg:py-20 md:py-16 sm:py-14 xs:py-12 sm:px-0 xs:px-6 bg-deepblue flex items-center justify-center mb-8">
+      <div id='trim' className=" xl:mt-32 lg:mt-28 md:mt-24 sm:mt-20 xs:mt-16 xl:py-24 lg:py-20 md:py-16 sm:py-14 xs:py-12 sm:px-0 xs:px-6 bg-deepblue flex items-center justify-center mb-8">
         <div className="flex bg-tertiary xl:px-8 lg:px-4 md:px-2 xs:px-1 xl:pt-16 lg:pt-12 md:pt-11 sm:pt-10 xs:pt-9 xl:pb-20 lg:pb-14 md:pb-12 sm:pb-11 xs:pb-10 flex-col items-center justify-center rounded-2xl">
           <div className="text-primary ">
             <input

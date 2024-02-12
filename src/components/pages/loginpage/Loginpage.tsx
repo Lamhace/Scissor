@@ -127,7 +127,6 @@ export default function Loginpage() {
             Don't have an account?
             <Link to="/signup">
               <span className="text-secondary xs:text-sm sm:text-base">
-                {" "}
                 &nbsp; Sign up
               </span>
             </Link>
