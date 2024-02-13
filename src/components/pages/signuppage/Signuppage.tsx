@@ -43,6 +43,9 @@ export default function Signuppage() {
 
 
     if (signUpData.password.length < 6 || !hasUppercase || !hasLowercase || !hasNumber) {
+      setPasswordErrorMessage(
+        ''
+      );
       setErrorMessage('Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
       return;
     }
