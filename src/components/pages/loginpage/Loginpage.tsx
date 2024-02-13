@@ -120,7 +120,7 @@ export default function Loginpage() {
             </button>
           </div>
 
-          <div className="flex item-center justify-center text-red-600 w-96 text-center">
+          <div className="flex item-center justify-center text-red-600 lg:w-96 ls:w-80 xs:w-72 text-center">
             {errorMessage}
           </div>
           <div className="flex item-center justify-center mt-5 text-gray-500 xs:font-normal sm:font-medium xs:text-sm sm:text-base">
