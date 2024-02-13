@@ -157,10 +157,10 @@ const handleShowPassword = () => {
           <div className=" xs:text-xs sm:font-semibold xs:font-medium xs:px-14 sm:px-0 justify-start">
             6 or more characters, one number, one uppercase & one lowercase
           </div>
-          <div className="text-red-600 lg:w-96 ls:w-80 xs:w-72">
+          <div className="text-red-600 flex justify-center text-center lg:w-96 ls:w-80 xs:w-72">
             {errorMessage}
           </div>
-          <div className=" text-red-600 lg:w-96 ls:w-80 xs:w-72">
+          <div className="flex justify-center text-center text-red-600 lg:w-96 ls:w-80 xs:w-72">
             {passwordErrorMessage}
           </div>
 
