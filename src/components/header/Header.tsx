@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import HeaderLogo from '../../../src/images/HeaderLogo.svg'
 import NavModal from '../NavModal';
 import { LuAlignJustify } from "react-icons/lu";
@@ -10,9 +10,10 @@ import { useNavigate } from 'react-router-dom'
 export default function Header() {
   const navigate = useNavigate();
   let { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
+  const [isLoggedOut, setIsLoggedOut] = useState(isLoggedIn)
 
   function logout() {
-   isLoggedIn = false
+   setIsLoggedOut(!isLoggedOut)
     navigate('/');
   }
 
@@ -35,7 +36,7 @@ export default function Header() {
         } lg:hidden z-50`}
         onClick={toggleMenu}
       />
-      {isOpen && <NavModal closeModal={isOpen} logOut={logout} />}
+      {isOpen && <NavModal closeModal={toggleMenu} logOut={logout} />}
 
       <div>
         <Link to="/Homepage">

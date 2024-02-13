@@ -5,8 +5,8 @@ import { Link } from 'react-scroll'
 
 
 type modalProp = {
-  closeModal: boolean,
-  logOut: any
+  closeModal: Function,
+  logOut: Function
 }
 export default function NavModal({closeModal, logOut}: modalProp) {
   return (
@@ -20,7 +20,7 @@ export default function NavModal({closeModal, logOut}: modalProp) {
         offset={-10}
         duration={1000}
       >
-        <div onClick={() => !closeModal}>Pricing</div>
+        <div onClick={() => closeModal}>Pricing</div>
       </Link>
       <Link
         to="analytics"
@@ -29,12 +29,12 @@ export default function NavModal({closeModal, logOut}: modalProp) {
         offset={260}
         duration={1000}
       >
-        <div onClick={() => !closeModal}>Analytics</div>
+        <div onClick={() => closeModal}>Analytics</div>
       </Link>
       <Link to="faq" spy={true} smooth={true} offset={100} duration={2000}>
-        <div onClick={() => !closeModal}>FAQs</div>
+        <div onClick={() => closeModal}>FAQs</div>
       </Link>
-      <div onClick={logOut} className=" text-secondary">Sign out</div>
+      <div onClick={()=>logOut} className=" text-secondary">Sign out</div>
       <div className=" bg-secondary xs:py-2  sm:px-6 xs:px-5 sm:text-sm xs:text-xs text-tertiary rounded-full">
         Try for free
       </div>
