@@ -4,11 +4,15 @@ import NavModal from '../NavModal';
 import { LuAlignJustify } from "react-icons/lu";
 import { LuX } from "react-icons/lu";
 import { Link } from 'react-scroll'
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
   const navigate = useNavigate();
+  let { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
+
   function logout() {
+   isLoggedIn = !isLoggedIn
     navigate('/');
   }
 
