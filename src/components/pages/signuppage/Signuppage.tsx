@@ -47,6 +47,9 @@ export default function Signuppage() {
       return;
     }
     if (signUpData.password !== signUpData.confirmPassword) {
+      setErrorMessage(
+        ""
+      );
       setPasswordErrorMessage(`Password doesn't match. Kindly check and try again.`);
       return
     }
@@ -154,7 +157,9 @@ const handleShowPassword = () => {
           <div className="text-red-600 lg:w-96 ls:w-80 xs:w-72">
             {errorMessage}
           </div>
-          <div className=" text-red-600 ">{passwordErrorMessage}</div>
+          <div className=" text-red-600 lg:w-96 ls:w-80 xs:w-72">
+            {passwordErrorMessage}
+          </div>
 
           <button className="xs:py-1 ls:py-2 sm:py-3 text-tertiary sm:font-medium xs:font-normal xs:text-sm sm:text-base bg-secondary sm:w-96 xs:w-72 ls:w-80 rounded-3xl mt-10">
             Sign up with Email
