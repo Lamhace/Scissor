@@ -12,7 +12,7 @@ export default function Header() {
   let { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
 
   function logout() {
-   isLoggedIn = !isLoggedIn
+   isLoggedIn = false
     navigate('/');
   }
 
