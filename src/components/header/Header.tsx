@@ -4,16 +4,17 @@ import NavModal from '../NavModal';
 import { LuAlignJustify } from "react-icons/lu";
 import { LuX } from "react-icons/lu";
 import { Link } from 'react-scroll'
-import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from "react-redux";
+import {  login } from "../../Redux/LoginReducer";
 
 export default function Header() {
   const navigate = useNavigate();
-  let { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
-  const [isLoggedOut, setIsLoggedOut] = useState(isLoggedIn)
+  const dispatch = useDispatch()
+  let user: any;
 
   function logout() {
-   setIsLoggedOut(!isLoggedOut)
+     dispatch(login(user))
     navigate('/');
   }
 
@@ -43,7 +44,7 @@ export default function Header() {
           <img
             src={HeaderLogo}
             alt="Logo"
-            className=" xl:w-max lg:w-32 md:w-28 sm:w-24 xs:w-16 xs:absolute top-8 left-8 sm:static sm:mt-4 lg:mt-0 xl:mt-1 2xl:mt-3 sm:ml-14"
+            className=" xl:w-max lg:w-32 md:w-28 sm:w-24 xs:w-20 xs:absolute top-8 left-8 sm:static sm:mt-4 lg:mt-0 xl:mt-1 2xl:mt-3 sm:ml-14"
           />
         </Link>
       </div>
