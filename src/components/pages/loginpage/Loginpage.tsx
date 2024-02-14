@@ -1,34 +1,34 @@
-import React, { useState } from 'react'
-import GoogleApple from '../../googleApple/GoogleApple'
+import React, { useState } from "react";
+import GoogleApple from "../../googleApple/GoogleApple";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import Footer from '../../footer/Footer'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
-import {  login } from "../../../Redux/LoginReducer";
-import { useDispatch } from 'react-redux'
-
-
+import Footer from "../../footer/Footer";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../firebaseConfig";
+import { login } from "../../../Redux/LoginReducer";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
 
 export default function Loginpage() {
+  const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [loginData, setLoginData] = React.useState({
-    email: '',
-    password: ''
-  })
-  const [errorMessage, setErrorMessage] = React.useState('')
+    email: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   function loginChange(event: React.ChangeEvent<HTMLInputElement>) {
     setLoginData((prevLoginData) => {
       return {
         ...prevLoginData,
-        [event.target.name]: event.target.value
-      }
-    })
+        [event.target.name]: event.target.value,
+      };
+    });
   }
 
   function submitLoginData(event: React.FormEvent<HTMLFormElement>) {
@@ -37,36 +37,40 @@ export default function Loginpage() {
     const hasLowercase = /[a-z]/.test(loginData.password);
     const hasNumber = /[0-9]/.test(loginData.password);
 
-
-    if (loginData.password.length < 6 || !hasUppercase || !hasLowercase || !hasNumber) {
-      setErrorMessage('Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
+    if (
+      loginData.password.length < 6 ||
+      !hasUppercase ||
+      !hasLowercase ||
+      !hasNumber
+    ) {
+      setErrorMessage(
+        "Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
+      );
       return;
-    }
-
-    else {
+    } else {
+      dispatch(login(true));
       signInWithEmailAndPassword(auth, loginData.email, loginData.password)
         .then((userCredential) => {
           // User successfully signed in
           const user = userCredential.user;
           console.log("Authenticated user:", user);
-          dispatch(login(loginData));
-          navigate("/homepage", { replace: true });
+          
+          if (!isLoggedIn) {
+            navigate("/homepage", { replace: true });
+          }
+          console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`)
         })
         .catch((error) => {
           // An error occurred during sign-in
-          setErrorMessage('Incorrect Email address or Password')
+          setErrorMessage("Incorrect Email address or Password");
         });
     }
-
   }
 
-
-  const [showPassword, setShowPassword] =useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
-
 
   return (
     <div>

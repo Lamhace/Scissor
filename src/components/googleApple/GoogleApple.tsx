@@ -23,7 +23,8 @@ export default function GoogleApple() {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        dispatch(login(user));
+         dispatch(login(true));
+        // dispatch(login());
         navigate("/homepage");
       }).catch((error) => {
         // Handle Errors here.

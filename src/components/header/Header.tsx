@@ -14,7 +14,8 @@ export default function Header() {
   let user: any;
 
   function logout() {
-     dispatch(login(user))
+  
+    dispatch(login(false))
     navigate('/');
   }
 

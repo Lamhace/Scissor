@@ -62,7 +62,8 @@ export default function Signuppage() {
         .then((userCredential) => {
           // User successfully signed in
           const user = userCredential.user;
-          dispatch(login(signUpData));
+           dispatch(login(true));
+          // dispatch(login());
           navigate("/homepage", { replace: true });
         })
         .catch((error) => {

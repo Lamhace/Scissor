@@ -18,7 +18,6 @@ const loginSlice = createSlice({
     },
     login: (state, action) => {
       state.isLoggedIn = action.payload;
-      state.isLoggedIn = true
     },
   },
 });
