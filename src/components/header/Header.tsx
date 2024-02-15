@@ -6,17 +6,21 @@ import { LuX } from "react-icons/lu";
 import { Link } from 'react-scroll'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux";
-import {  login } from "../../Redux/LoginReducer";
+
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import {  logOut } from "../../Redux/LoginReducer";
 
 export default function Header() {
+  
+  const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
   const navigate = useNavigate();
   const dispatch = useDispatch()
   let user: any;
 
   function logout() {
-  
-    dispatch(login(false))
+    dispatch(logOut())
     navigate('/');
+    console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`);
   }
 
   const [isOpen, setIsOpen] = React.useState(false)

@@ -1,7 +1,7 @@
 import React from 'react'
 import GoogleLogo from '../../../src/images/GoogleLogo.svg'
 import { useNavigate } from 'react-router-dom'
-import { login } from "../../Redux/LoginReducer";
+import { logIn } from "../../Redux/LoginReducer";
 import { useDispatch } from "react-redux";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../../firebaseConfig'
@@ -23,7 +23,7 @@ export default function GoogleApple() {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-         dispatch(login(true));
+         dispatch(logIn());
         // dispatch(login());
         navigate("/homepage");
       }).catch((error) => {

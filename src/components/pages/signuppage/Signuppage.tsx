@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
-import { login } from "../../../Redux/LoginReducer";
+import { logIn } from "../../../Redux/LoginReducer";
 import { useDispatch } from "react-redux";
 
 
@@ -62,7 +62,7 @@ export default function Signuppage() {
         .then((userCredential) => {
           // User successfully signed in
           const user = userCredential.user;
-           dispatch(login(true));
+           dispatch(logIn());
           // dispatch(login());
           navigate("/homepage", { replace: true });
         })

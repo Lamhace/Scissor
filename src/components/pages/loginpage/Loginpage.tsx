@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
-import { login } from "../../../Redux/LoginReducer";
+import { logIn } from "../../../Redux/LoginReducer";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 
@@ -48,17 +48,15 @@ export default function Loginpage() {
       );
       return;
     } else {
-      dispatch(login(true));
       signInWithEmailAndPassword(auth, loginData.email, loginData.password)
         .then((userCredential) => {
           // User successfully signed in
           const user = userCredential.user;
           console.log("Authenticated user:", user);
-          
-          if (!isLoggedIn) {
-            navigate("/homepage", { replace: true });
-          }
+          dispatch(logIn());
+          navigate("/homepage", { replace: true });
           console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`)
+          console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`);
         })
         .catch((error) => {
           // An error occurred during sign-in
@@ -119,7 +117,7 @@ export default function Loginpage() {
             Forgot your password?
           </div>
           <div className=" flex item-center justify-center">
-            <button className=" xs:py-1 ls:py-2 sm:py-3 text-tertiary xs:font-normal sm:font-medium bg-secondary xs:w-72 ls:w-80 sm:w-96 xs:rounded-2xl sm:rounded-3xl xs:text-sm sm:text-base">
+            <button className=" xs:py-1 sm:py-4 text-tertiary xs:font-normal sm:font-medium bg-secondary xs:w-72 ls:w-80 sm:w-96 xs:rounded-2xl sm:rounded-3xl xs:text-sm sm:text-base">
               Log in
             </button>
           </div>

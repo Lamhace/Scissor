@@ -28,7 +28,7 @@ export default function NavModal({closeModal, logOut}: any) {
       >
         <div onClick={closeModal}>Analytics</div>
       </Link>
-      <Link to="faq" spy={true} smooth={true} offset={100} duration={2000}>
+      <Link to="faq" spy={true} smooth={true} offset={400} duration={2000}>
         <div onClick={closeModal}>FAQs</div>
       </Link>
       <div onClick={logOut} className=" text-secondary">Sign out</div>
