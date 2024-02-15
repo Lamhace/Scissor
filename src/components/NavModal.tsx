@@ -8,14 +8,9 @@ import { Link } from 'react-scroll'
 export default function NavModal({closeModal, logOut}: any) {
   return (
     <div
-
-
-
       className={`absolute top-0 w-full flex flex-col md:gap-6 sm:gap-5 xs:gap-4 bg-tertiary h-screen items-center sm:pt-28 xs:pt-36 md:text-lg sm:text-base xs:text-sm navModal transition-all  duration-1000 ${
         closeModal ? "openModal" : "closeModal"
       }`}
-
-      
     >
       <div className="">My URLs</div>
       <div>Features</div>
@@ -26,7 +21,7 @@ export default function NavModal({closeModal, logOut}: any) {
         offset={-10}
         duration={1000}
       >
-        <div onClick={closeModal}>Pricing</div>
+        <div onClick={() => closeModal}>Pricing</div>
       </Link>
       <Link
         to="analytics"
@@ -35,10 +30,10 @@ export default function NavModal({closeModal, logOut}: any) {
         offset={260}
         duration={1000}
       >
-        <div onClick={closeModal}>Analytics</div>
+        <div onClick={() => closeModal}>Analytics</div>
       </Link>
       <Link to="faq" spy={true} smooth={true} offset={400} duration={2000}>
-        <div onClick={closeModal}>FAQs</div>
+        <div onClick={() => closeModal}>FAQs</div>
       </Link>
       <div onClick={logOut} className=" text-secondary">
         Sign out
