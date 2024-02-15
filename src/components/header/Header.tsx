@@ -42,7 +42,8 @@ export default function Header() {
         } lg:hidden z-50`}
         onClick={toggleMenu}
       />
-      {isOpen && <NavModal closeModal={toggleMenu} logOut={logout} />}
+        {isOpen && <NavModal closeModal={toggleMenu} logOut={logout} />}
+  
 
       <div>
         <Link to="/Homepage">
