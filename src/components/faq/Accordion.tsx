@@ -1,8 +1,7 @@
-import React from 'react'
-import FaqData from './FaqData'
-import { AiOutlinePlus } from 'react-icons/ai'
-import { AiOutlineMinus } from 'react-icons/ai'
-
+import React from "react";
+import FaqData from "./FaqData";
+import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineMinus } from "react-icons/ai";
 
 export default function Accordion() {
   const [openedIndex, setOpenedIndex] = React.useState<number>(-1); // -1 means nothing is opened
@@ -27,13 +26,9 @@ export default function Accordion() {
             </div>
             <div
               onClick={() => toggleAccordion(index)}
-              className=" xl:text-xl lg:text-lg md:text-base lg:font-semibold md:font-medium transition-all duration-1000"
+              className=" xl:text-xl lg:text-lg md:text-base lg:font-semibold md:font-medium transition-all duration-300"
             >
-              {openedIndex === index ? (
-                <AiOutlineMinus className="transition-all duration-200" />
-              ) : (
-                <AiOutlinePlus className="transition-all duration-200" />
-              )}
+              {openedIndex === index ? <AiOutlineMinus /> : <AiOutlinePlus />}
             </div>
           </div>
           {openedIndex === index && (

@@ -11,7 +11,16 @@ body{
 
 
 
-
+.openModal{
+opacity: 1;
+pointer-events: auto;
+visibility: visible;
+}
+.closeModal{
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
 
 
 
