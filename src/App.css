@@ -19,11 +19,14 @@ body{
 .showNavModal {
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
 }
 
 .hideNavModal {
     opacity: 0;
     pointer-events: none;
+    visibility: hidden;
+    display: none;
 }
 
 
