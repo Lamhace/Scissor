@@ -45,7 +45,7 @@ export default function Header() {
           isOpen ? "showNavModal" : "hideNavModal"
         }`}
       >
-        <NavModal closeModal={isOpen} logOut={logout} />
+        <NavModal isModalOpen={isOpen} logOut={logout} />
       </div>
 
       <div>
