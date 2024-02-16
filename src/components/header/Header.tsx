@@ -40,7 +40,7 @@ export default function Header() {
         onClick={toggleMenu}
       />
       <div
-        className={` transition-all  duration-300 ${
+        className={` sm:hidden transition-all  duration-300 ${
           isOpen ? "showNavModal" : "hideNavModal"
         }`}
       >
