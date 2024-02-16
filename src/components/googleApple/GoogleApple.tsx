@@ -25,7 +25,7 @@ export default function GoogleApple() {
         // ...
          dispatch(logIn());
         // dispatch(login());
-        navigate("/homepage");
+        navigate("/");
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
