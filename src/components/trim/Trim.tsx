@@ -83,7 +83,7 @@ export default function Trim() {
         </div>
       </div>
       {shortenedURL && (
-        <div className="flex flex-col gap-4 justify-center items-center bg-tertiary lg:px-10 md:px-8 sm:px-6 xs:px-5 lg:py-5 md:py-4 sm:py-5 xs:py-4 ">
+        <div className="flex flex-col gap-4 justify-center items-center bg-tertiary 2xl:w-1/4 xl:w-2/4 lg:w-2/4 sm:w-2/4 md:w-2/4 ls:w-80 xs:w-72 lg:py-5 md:py-4 sm:py-5 xs:py-4 ">
           <div className=" text-secondary md:text-2xl sm:text-xl xs:text-lg">
             Generated Shortened URL:
           </div>

@@ -165,7 +165,7 @@ const handleShowPassword = () => {
             {passwordErrorMessage}
           </div>
 
-          <button className="xs:py-1 ls:py-2 sm:py-3 text-tertiary sm:font-medium xs:font-normal xs:text-sm sm:text-base bg-secondary sm:w-96 xs:w-72 ls:w-80 rounded-3xl mt-10">
+          <button className="xs:py-2 sm:py-3 text-tertiary sm:font-medium xs:font-normal xs:text-sm sm:text-base bg-secondary sm:w-96 xs:w-72 ls:w-80 rounded-3xl mt-10">
             Sign up with Email
           </button>
           <div className="text-gray-500 sm:text-base xs:text-sm font-medium mt-4">

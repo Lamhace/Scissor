@@ -117,7 +117,7 @@ export default function Loginpage() {
             Forgot your password?
           </div>
           <div className=" flex item-center justify-center">
-            <button className=" xs:py-1 sm:py-4 text-tertiary xs:font-normal sm:font-medium bg-secondary xs:w-72 ls:w-80 sm:w-96 xs:rounded-2xl sm:rounded-3xl xs:text-sm sm:text-base">
+            <button className=" xs:py-2 sm:py-4 text-tertiary xs:font-normal sm:font-medium bg-secondary xs:w-72 ls:w-80 sm:w-96 xs:rounded-2xl sm:rounded-3xl xs:text-sm sm:text-base">
               Log in
             </button>
           </div>

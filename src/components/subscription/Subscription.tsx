@@ -107,8 +107,8 @@ export default function Subscription() {
                 </div>
             </div>
             <div className=' flex justify-center md:mt-14 sm:mt-11 xs:mt-10 gap-8 xl:text-base lg:text-sm xs:text-xs  md:font-medium xs:font-normal sm:text-base'>
-                <div ><button className=' bg-tertiary text-secondary border border-secondary sm:rounded-3xl xs:rounded-2xl lg:py-3 md:py-2 xs:py-1 lg:px-6 md:px-5 sm:px-4 xs:px-3'>Get Custom Pricing</button></div>
-                <div ><button className='lg:py-3 md:py-2 xs:py-1 lg:px-12 md:px-11 sm:px-6 xs:px-5  bg-secondary text-tertiary border border-tertiary sm:rounded-3xl xs:rounded-2xl'> Select Pricing</button></div>
+                <div ><button className='transition ease-in-out hover:bg-secondary hover:text-tertiary duration-500 bg-tertiary text-secondary border border-secondary sm:rounded-3xl xs:rounded-2xl lg:py-3 md:py-2 xs:py-1 lg:px-6 md:px-5 sm:px-4 xs:px-3'>Get Custom Pricing</button></div>
+                <div ><button className='transition ease-out hover:bg-blue-800 duration-500 lg:py-3 md:py-2 xs:py-1 lg:px-12 md:px-11 sm:px-6 xs:px-5  bg-secondary text-tertiary border border-tertiary sm:rounded-3xl xs:rounded-2xl'> Select Pricing</button></div>
             </div>
         </div>
     )
