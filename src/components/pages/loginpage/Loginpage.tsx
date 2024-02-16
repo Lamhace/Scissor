@@ -54,7 +54,7 @@ export default function Loginpage() {
           const user = userCredential.user;
           console.log("Authenticated user:", user);
           dispatch(logIn());
-          navigate("/homepage", { replace: true });
+          navigate("/", { replace: true });
           console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`)
           console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`);
         })

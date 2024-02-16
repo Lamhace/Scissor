@@ -6,7 +6,6 @@ import { LuX } from "react-icons/lu";
 import { Link } from "react-scroll";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { logOut } from "../../Redux/LoginReducer";
 
@@ -17,7 +16,7 @@ export default function Header() {
 
   function logout() {
     dispatch(logOut());
-    navigate("/");
+    navigate("/login");
     console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`);
   }
 
@@ -45,7 +44,7 @@ export default function Header() {
           isOpen ? "showNavModal" : "hideNavModal"
         }`}
       >
-        <NavModal isModalOpen={isOpen} logOut={logout} />
+        <NavModal isModalOpen={toggleMenu} logOut={logout} />
       </div>
 
       <div>
@@ -85,9 +84,16 @@ export default function Header() {
       </div>
 
       <div className="flex lg:gap-5 md:gap-4 sm:gap-3 items-center sm:flex-row lg:text-sm sm:text-xs sm:opacity-100 xs:opacity-0 sm:pointer-events-auto xs:pointer-events-none ">
-        <li className=" text-secondary" onClick={logout}>
-          Sign out
-        </li>
+        {isLoggedIn ? (
+          <li className=" text-secondary" onClick={logout}>
+            Sign out
+          </li>
+        ) : (
+          <li className=" text-secondary" onClick={logout}>
+            Sign in
+          </li>
+        )}
+        
         <li className=" bg-secondary lg:py-3 sm:py-2 lg:px-8 sm:px-5 text-tertiary rounded-full">
           Try for free
         </li>

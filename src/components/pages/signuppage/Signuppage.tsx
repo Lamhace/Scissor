@@ -64,7 +64,7 @@ export default function Signuppage() {
           const user = userCredential.user;
            dispatch(logIn());
           // dispatch(login());
-          navigate("/homepage", { replace: true });
+          navigate("/", { replace: true });
         })
         .catch((error) => {
           // An error occurred during sign-in
@@ -170,7 +170,7 @@ const handleShowPassword = () => {
           </button>
           <div className="text-gray-500 sm:text-base xs:text-sm font-medium mt-4">
             Already have an account?{" "}
-            <Link to="/">
+            <Link to="/login">
               <span className="text-secondary">Log in</span>
             </Link>
           </div>

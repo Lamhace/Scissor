@@ -1,20 +1,37 @@
 import React from "react";
 import axios from "axios";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import { GiBoxCutter } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 // const res = await https://api.shrtco.de/v2/shorten?url=${input}
 // setResult(res.data.result.full_short_link)
 
 export default function Trim() {
+  
+  const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
   const [url, setURL] = React.useState("");
   const [shortenedURL, setShortenedURL] = React.useState("");
+  const navigate = useNavigate()
 
   function userURL(event: any) {
-    setURL(event.target.value);
+      setURL(event.target.value);
+    
+    
+
+
+    // setURL(event.target.value);
   }
 
   function newUserURL() {
-    setShortenedURL(url.substring(0, Math.floor(Math.random() * url.length)));
+     if (isLoggedIn) {
+       setShortenedURL(
+         url.substring(0, Math.floor(Math.random() * url.length))
+       );
+     } else {
+       navigate("/login");
+     }
+    
   }
 
   // const newUserURL = async () => {
