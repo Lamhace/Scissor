@@ -113,7 +113,7 @@ export default function Loginpage() {
               </span>
             </span>
           </div>
-          <div className="flex justify-end xs:py-1 sm:py-2 xs:mb-1 sm:mb-2 text-secondary xs:px-12 ls:px-8 sm:px-0 xs:text-sm sm:text-base ">
+          <div className="flex justify-end xs:py-1 sm:py-2 xs:mb-1 sm:mb-2 text-secondary xs:px-0  sm:px-0 xs:text-sm sm:text-base ">
             Forgot your password?
           </div>
           <div className=" flex item-center justify-center">

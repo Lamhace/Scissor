@@ -7,7 +7,7 @@ import { Link } from 'react-scroll'
 
 export default function NavModal({isModalOpen, logOut}: any) {
   return (
-    <div className= {` absolute top-0 w-full flex flex-col xs:gap-4 sm:hidden smpointer-events-none   bg-tertiary h-screen items-center xs:pt-36 md:text-lg xs:text-sm`}>
+    <div className= {`absolute top-0 w-full flex flex-col xs:gap-4 sm:hidden sm:pointer-events-none  bg-tertiary h-screen items-center xs:pt-36 md:text-lg xs:text-sm`}>
       <div className="">My URLs</div>
       <div>Features</div>
       <Link
