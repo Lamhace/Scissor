@@ -13,7 +13,7 @@ export default function Footer() {
     <div className="xs:flex xs:flex-wrap xl:flex sm:grid md:grid-cols-3 sm:grid-cols-2 grid-rows-2 lg:px-20 md:px-24 sm:px-28  justify-center xs:gap-10 lg:gap-20  md:gap-10 sm:gap-14 xs:py-14 sm:py-16 md:py-20 bg-blue-100">
       <div className="xl:flex items-center flex-col sm:gap-7 ">
         <div className="xl:mb-0 lg:mb-4 md:mb-3 xs:mb-1">
-          <Link to="/Homepage">
+          <Link to="/">
             <img
               src={FooterImg}
               alt="Logo"
