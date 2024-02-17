@@ -26,7 +26,7 @@ export default function Header() {
   };
 
   return (
-    <div className="flex 2xl:px-24 xl:px-20 lg:px-16 sm:px-3 py-3 list-none sm:justify-between sm:items-center hover:cursor-pointer xl:text-lg md:text-sm sm:text-xs font-medium relative">
+    <div className="flex 2xl:px-24 xl:px-20 lg:px-16 sm:px-3 py-3 list-none sm:justify-between sm:items-center hover:cursor-pointer xl:text-xl lg:text-base md:text-sm sm:text-sm font-medium relative">
       <LuAlignJustify
         className={` z-50 sm:hidden xs:opacity-100  absolute xs:right-8 xs:top-8 md:text-3xl xs:text-xl transition-all duration-300 ${
           isOpen ? "hideHamburger" : "showHamburger"
@@ -56,7 +56,7 @@ export default function Header() {
           />
         </Link>
       </div>
-      <div className="flex xl:gap-14 lg:gap-11 md:gap-8 sm:gap-5 items-center lg:text-sm sm:text-xs sm:opacity-100 xs:opacity-0 sm:pointer-events-auto xs:pointer-events-none ">
+      <div className="flex xl:gap-14 lg:gap-11 md:gap-8 sm:gap-5 items-center sm:opacity-100 xs:opacity-0 sm:pointer-events-auto xs:pointer-events-none ">
         {/* <span className='feature-dropdown'>^</span> */}
         <li className="">My URLs</li>
         <li>Features</li>
@@ -83,7 +83,7 @@ export default function Header() {
         </Link>
       </div>
 
-      <div className="flex lg:gap-5 md:gap-4 sm:gap-3 items-center sm:flex-row lg:text-sm sm:text-xs sm:opacity-100 xs:opacity-0 sm:pointer-events-auto xs:pointer-events-none ">
+      <div className="flex lg:gap-5 md:gap-4 sm:gap-3 items-center sm:flex-row  sm:opacity-100 xs:opacity-0 sm:pointer-events-auto xs:pointer-events-none ">
         {isLoggedIn ? (
           <li className=" text-secondary" onClick={logout}>
             Sign out

@@ -60,7 +60,7 @@ export default function Trim() {
         <div className="flex sm:flex-row xs:flex-col sm:items-start xs:items-center lg:gap-1 md:gap-1 sm:gap-1 xs:gap-3  mt-6">
           <div className="">
             <select
-              className=" border-2 lg:py-4 md:py-3 sm:py-2 xs:py-1 lg:pl-2 md:pl-3 xs:pl-2 lg:w-48 md:w-48 sm:w-48 ls:w-80 xs:w-72  rounded-2xl border-secondary"
+              className=" border-2 appearance-none lg:py-4 md:py-3 sm:py-2 xs:py-1 lg:pl-2 md:pl-3 xs:pl-2 lg:w-48 md:w-48 sm:w-48 ls:w-80 xs:w-72  rounded-2xl border-secondary"
               name="Domain"
               id="1"
             >

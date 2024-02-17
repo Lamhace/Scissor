@@ -11,7 +11,7 @@ export default function NavModal({isModalOpen, logOut}: any) {
 
   return (
     <div
-      className={`absolute top-0 w-full flex flex-col xs:gap-4 sm:hidden sm:pointer-events-none  bg-tertiary h-screen items-center xs:pt-36 md:text-lg xs:text-sm`}
+      className={`absolute top-0 w-full flex flex-col xs:gap-5 sm:hidden sm:pointer-events-none  bg-tertiary h-screen items-center xs:pt-36 xs:text-base`}
     >
       <div className="">My URLs</div>
       <div>Features</div>
@@ -46,7 +46,7 @@ export default function NavModal({isModalOpen, logOut}: any) {
         </div>
       )}
 
-      <div className=" bg-secondary xs:py-2  sm:px-6 xs:px-5 sm:text-sm xs:text-xs text-tertiary rounded-full">
+      <div className=" bg-secondary xs:py-2  sm:px-6 xs:px-5 text-tertiary rounded-full">
         Try for free
       </div>
     </div>
