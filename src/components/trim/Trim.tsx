@@ -3,6 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { GiBoxCutter } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineClose } from "react-icons/ai";
 
 // const res = await https://api.shrtco.de/v2/shorten?url=${input}
 // setResult(res.data.result.full_short_link)
@@ -17,9 +18,6 @@ export default function Trim() {
   function userURL(event: any) {
       setURL(event.target.value);
     
-    
-
-
     // setURL(event.target.value);
   }
 
@@ -31,7 +29,7 @@ export default function Trim() {
      } else {
        navigate("/login");
      }
-    
+    setURL('')
   }
 
   // const newUserURL = async () => {
@@ -100,11 +98,18 @@ export default function Trim() {
         </div>
       </div>
       {shortenedURL && (
-        <div className="flex flex-col gap-4 justify-center items-center bg-tertiary 2xl:w-1/4 xl:w-2/4 lg:w-2/4 sm:w-2/4 md:w-2/4 ls:w-80 xs:w-72 lg:py-5 md:py-4 sm:py-5 xs:py-4 ">
+        <div className="flex flex-col gap-4 justify-center items-center bg-tertiary 2xl:w-1/4 xl:w-2/4 lg:w-2/4 sm:w-2/4 md:w-2/4 ls:w-80 xs:w-72 lg:py-5 md:py-4 sm:py-5 xs:py-4 relative ">
           <div className=" text-secondary md:text-2xl sm:text-xl xs:text-lg">
             Generated Shortened URL:
           </div>
-          <div className="text-deepblue md:text-xl sm:text-lg xs:text-base">{shortenedURL}</div>
+          <div className="text-deepblue md:text-xl sm:text-lg xs:text-base">
+            {shortenedURL}
+          </div>
+
+          <AiOutlineClose
+            onClick={() => setShortenedURL("")}
+            className="absolute top-0 right-0 lg:text-3xl  sm:text-2xl ls:text-xl xs:text-lg text-red-500 transition hover:text-red-600 duration-100"
+          />
         </div>
       )}
     </div>
