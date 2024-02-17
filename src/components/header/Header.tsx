@@ -64,7 +64,6 @@ export default function Header() {
           to="subscription"
           spy={true}
           smooth={true}
-          offset={-10}
           duration={1000}
         >
           <li>Pricing</li>
@@ -73,12 +72,16 @@ export default function Header() {
           to="analytics"
           spy={true}
           smooth={true}
-          offset={260}
           duration={1000}
         >
           <li>Analytics</li>
         </Link>
-        <Link to="faq" spy={true} smooth={true} offset={100} duration={2000}>
+        <Link
+          to="faq"
+          spy={true}
+          smooth={true}
+          duration={2000}
+        >
           <li>FAQs</li>
         </Link>
       </div>
@@ -93,7 +96,7 @@ export default function Header() {
             Sign in
           </li>
         )}
-        
+
         <li className=" bg-secondary lg:py-3 sm:py-2 lg:px-8 sm:px-5 text-tertiary rounded-full">
           Try for free
         </li>

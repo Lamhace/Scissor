@@ -6,7 +6,12 @@ body{
 .hero {
     background-color: rgb(252, 255, 252);
 }
-
+ input {
+     outline: none;
+ }
+ select{
+    outline: none;
+ }
 
 .showHamburger{
     opacity: 1;
@@ -27,16 +32,9 @@ body{
     pointer-events: none;
     visibility: hidden;
 }
-
-
-
-
-
-
-
-
-
-
+.accordion {
+    width: 90%;
+}
 
 @media (min-width: 1280px) {
     .whyScissor {
@@ -46,59 +44,53 @@ body{
             padding: 8px;
         }
 }
+/* @media (min-width: 1024px) {
+    input::placeholder{
 
-
-
-
-
-
-@media (min-width: 1024px) {
-    .whyScissor {
-        width: 1250px;
-    }
-        
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@media only screen and (min-width: 350px){
-.accordion {
-        width: 90%;
     }
 }
+@media (min-width: 768px) {
+    input::placeholder {}
+}
+@media (min-width: 768px) {
+    input::placeholder {}
+}
+
+@media (min-width: 640px) {
+    input::placeholder {}
+}
+@media (min-width: 450px) {
+    input::placeholder {}
+}
+@media (min-width: 350px) {
+} */
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 640px) {  }
 
 
 @media (min-width: 350px) {
-
-
     input::placeholder {
         font-size: 0.8rem;
     }

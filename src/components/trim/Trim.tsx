@@ -4,32 +4,33 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { GiBoxCutter } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
+import { IoMdArrowDropdown } from "react-icons/io";
+
 
 // const res = await https://api.shrtco.de/v2/shorten?url=${input}
 // setResult(res.data.result.full_short_link)
 
 export default function Trim() {
-  
   const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
   const [url, setURL] = React.useState("");
   const [shortenedURL, setShortenedURL] = React.useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function userURL(event: any) {
-      setURL(event.target.value);
-    
+    setURL(event.target.value);
+
     // setURL(event.target.value);
   }
 
   function newUserURL() {
-     if (isLoggedIn) {
-       setShortenedURL(
-         url.substring(0, Math.floor(Math.random() * url.length) + 1)
-       );
-     } else {
-       navigate("/login");
-     }
-    setURL('')
+    if (isLoggedIn) {
+      setShortenedURL(
+        url.substring(0, Math.floor(Math.random() * url.length) + 1)
+      );
+    } else {
+      navigate("/login");
+    }
+    setURL("");
   }
 
   // const newUserURL = async () => {
@@ -58,9 +59,9 @@ export default function Trim() {
           />
         </div>
         <div className="flex sm:flex-row xs:flex-col sm:items-start xs:items-center lg:gap-1 md:gap-1 sm:gap-1 xs:gap-3  mt-6">
-          <div className="">
+          <div className="relative">
             <select
-              className=" border-2 appearance-none lg:py-4 md:py-3 sm:py-2 xs:py-1 lg:pl-2 md:pl-3 xs:pl-2 lg:w-48 md:w-48 sm:w-48 ls:w-80 xs:w-72  rounded-2xl border-secondary"
+              className="border-2 appearance-none lg:py-4 md:py-3 sm:py-2 xs:py-1  xs:pl-3 lg:w-48 md:w-48 sm:w-48 ls:w-80 xs:w-72  rounded-2xl border-secondary"
               name="Domain"
               id="1"
             >
@@ -68,10 +69,11 @@ export default function Trim() {
               <option value="2">Scissor.com</option>
               <option value="3">Add Domain</option>
             </select>
+            <IoMdArrowDropdown className="absolute lg:top-5 md:top-4 sm:top-3 xs:top-2 right-5 pointer-events-none text-xl" />
           </div>
           <div>
-            <input
-              className=" border-2 lg:py-4 md:py-3 sm:py-2 xs:py-1 lg:pl-4 md:pl-3 xs:pl-2 lg:w-48 md:w-48 sm:w-48 ls:w-80 xs:w-72 rounded-2xl border-secondary"
+            <input 
+              className="border-2 lg:py-4 md:py-3 sm:py-2 xs:py-1 lg:pl-4 md:pl-3 xs:pl-2 lg:w-48 md:w-48 sm:w-48 ls:w-80 xs:w-72 rounded-2xl border-secondary"
               type="text"
               placeholder="Type Alias here"
             />
@@ -87,13 +89,14 @@ export default function Trim() {
           </span>
         </button>
         <div className=" text-secondary xl:w-full lg:w-2/4 xs:w-2/3 xs sm:px-0 xs:px-2 sm:text-base xs:text-sm ">
-          By clicking TrimURL, I agree to the
+          By clicking TrimURL, I agree to the{" "}
           <span className="md:font-semibold sm:font-medium">
             Terms of Service
           </span>
+          ,{" "}
           <span className="md:font-semibold sm:font-medium">
             Privacy Policy
-          </span>
+          </span>{" "}
           and Use of Cookies.
         </div>
       </div>

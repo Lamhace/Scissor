@@ -1,12 +1,8 @@
-import React from 'react'
-import { Link } from 'react-scroll'
+import React from "react";
+import { Link } from "react-scroll";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
-
-
-
-
-export default function NavModal({isModalOpen, logOut}: any) {
+export default function NavModal({ isModalOpen, logOut }: any) {
   const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
 
   return (
@@ -19,7 +15,6 @@ export default function NavModal({isModalOpen, logOut}: any) {
         to="subscription"
         spy={true}
         smooth={true}
-        offset={-10}
         duration={1000}
       >
         <div onClick={isModalOpen}>Pricing</div>
@@ -28,12 +23,11 @@ export default function NavModal({isModalOpen, logOut}: any) {
         to="analytics"
         spy={true}
         smooth={true}
-        offset={260}
         duration={1000}
       >
         <div onClick={isModalOpen}>Analytics</div>
       </Link>
-      <Link to="faq" spy={true} smooth={true} offset={100} duration={2000}>
+      <Link to="faq" spy={true} smooth={true} duration={2000}>
         <div onClick={isModalOpen}>FAQs</div>
       </Link>
       {isLoggedIn ? (
