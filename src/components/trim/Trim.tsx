@@ -24,7 +24,7 @@ export default function Trim() {
   function newUserURL() {
      if (isLoggedIn) {
        setShortenedURL(
-         url.substring(0, Math.floor(Math.random() * url.length))
+         url.substring(0, Math.floor(Math.random() * url.length) + 1)
        );
      } else {
        navigate("/login");
@@ -78,7 +78,7 @@ export default function Trim() {
           </div>
         </div>
         <button
-          className="flex items-center md:gap-7 sm:gap-6 xs:gap-5 justify-center text-tertiary bg-secondary pl-2 sm:w-96 ls:w-80 xs:w-72 lg:py-4 md:py-3 sm:py-2 xs:py-1 sm:rounded-3xl xs:rounded-2xl md:mt-6 sm:mt-5 xs:mt-4 sm:mb-8 xs:mb-7"
+          className="flex sm:transition sm:hover:bg-blue-800 duration-75  items-center md:gap-7 sm:gap-6 xs:gap-5 justify-center text-tertiary bg-secondary pl-2 sm:w-96 ls:w-80 xs:w-72 lg:py-4 md:py-3 sm:py-2 xs:py-1 sm:rounded-3xl xs:rounded-2xl md:mt-6 sm:mt-5 xs:mt-4 sm:mb-8 xs:mb-7"
           onClick={newUserURL}
         >
           <span className="">Trim URL</span>
