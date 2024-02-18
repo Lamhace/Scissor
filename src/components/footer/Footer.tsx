@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import FooterImg from '../../../src/images/FooterLogo.svg'
 import TwitterLogo from '../../../src/images/TwitterLogo.svg'
 import InstagramLogo from '../../../src/images/InstagramLogo.svg'
 import LinkedInLogo from '../../../src/images/LinkedInLogo.svg'
 import FacebookLogo from '../../../src/images/FacebookLogo.svg'
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 
 export default function Footer() {
+  useEffect(()=>{
+    Aos.init({duration:2000})
+  })
 
   return (
     <div className="xs:flex xs:flex-wrap xl:flex sm:grid md:grid-cols-3 sm:grid-cols-2 grid-rows-2 lg:px-20 md:px-24 sm:px-28  justify-center xs:gap-10 lg:gap-20  md:gap-10 sm:gap-14 xs:py-14 sm:py-16 md:py-20 bg-blue-100">
-      <div className="xl:flex items-center flex-col sm:gap-7 ">
+      <div
+        data-aos="fade-down"
+        className="xl:flex items-center flex-col sm:gap-7 "
+      >
         <div className="xl:mb-0 lg:mb-4 md:mb-3 xs:mb-1">
           <Link to="/">
             <img
@@ -53,7 +61,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-14">
+      <div data-aos="fade-down" className="flex flex-col gap-14">
         <div>
           <div className=" lg:font-bold md:font-semibold xs:font-medium  mb-3">
             Why Scissor ?
@@ -99,7 +107,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-8">
+      <div data-aos="fade-down" className="flex flex-col gap-8">
         <div>
           <div className=" lg:font-bold md:font-semibold xs:font-medium mb-3">
             Solutions
@@ -139,7 +147,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-14">
+      <div data-aos="fade-down" className="flex flex-col gap-14">
         <div>
           <div className=" lg:font-bold md:font-semibold xs:font-medium mb-3">
             Products
@@ -176,7 +184,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div>
+      <div data-aos="fade-down">
         <div className=" lg:font-bold md:font-semibold xs:font-medium mb-3">
           Company
         </div>

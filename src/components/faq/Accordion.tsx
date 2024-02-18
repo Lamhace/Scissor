@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FaqData from "./FaqData";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineMinus } from "react-icons/ai";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 export default function Accordion() {
+   useEffect(() => {
+     Aos.init({ duration: 2000 });
+   }, []);
   const [openedIndex, setOpenedIndex] = React.useState<number>(-1); // -1 means nothing is opened
 
   const toggleAccordion = (index: number) => {
@@ -19,7 +24,7 @@ export default function Accordion() {
         FAQs
       </h1>
       {FaqData.map((item, index) => (
-        <div className="accordion" key={index}>
+        <div data-aos="fade-down" className="accordion" key={index}>
           <div className=" flex lg:mb-5 md:mb-4 sm:mb-3 xs:mb-2 mt-3 items-center justify-between">
             <div className="xl:text-lg lg:text-base xs:text-sm lg:font-semibold md:font-medium xs:font-medium xs:pr-5">
               {item.question}
