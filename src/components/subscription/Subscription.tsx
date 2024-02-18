@@ -31,7 +31,7 @@ export default function Subscription() {
 
         <div className="flex lg:flex-row xs:flex-col lg:gap-0 md:gap-12 xs:gap-11 items-center justify-center mt-16 ">
           <div
-            data-aos="fade-right"
+            data-aos="fade-down"
             className="shadow-md w-fit pt-5 lg:pb-7 sm:pb-5 xs:pb-4 xl:pl-20 md:pl-14 sm:pl-10 xs:pl-6 xl:pr-12 md:pr-9 sm:pr-14 xs:pr-12 border border-blue-300 lg:rounded-l-2xl lg:rounded-r-none sm:rounded-2xl xs:rounded-xl"
           >
             {BasicPlan.map((item) => {
@@ -97,7 +97,7 @@ export default function Subscription() {
           </div>
 
           <div
-            data-aos="fade-left"
+            data-aos="fade-up"
             className="shadow-md w-fit  border pt-5 lg:pb-7 sm:pb-5 xs:pb-4 xl:pl-16 md:pl-12 sm:pl-9 xs:pl-7  xl:pr-10 md:pr-8 sm:pr-12 xs:pr-7 border-blue-300 lg:rounded-r-2xl lg:rounded-l-none sm:rounded-2xl xs:rounded-xl"
           >
             {TeamsPlan.map((item) => {
@@ -130,12 +130,12 @@ export default function Subscription() {
           </div>
         </div>
         <div className=" flex justify-center md:mt-14 sm:mt-11 xs:mt-10 gap-8 xl:text-base lg:text-sm xs:text-xs  md:font-medium xs:font-normal sm:text-base">
-          <div data-aos="fade-right">
+          <div data-aos="zoom-out">
             <button className="transition ease-in-out lg:hover:bg-secondary lg:hover:text-tertiary duration-500 bg-tertiary text-secondary border border-secondary sm:rounded-3xl xs:rounded-2xl lg:py-3 md:py-2 xs:py-1 lg:px-6 md:px-5 sm:px-4 xs:px-3">
               Get Custom Pricing
             </button>
           </div>
-          <div data-aos="fade-left">
+          <div data-aos="zoom-out">
             <button className="transition ease-out lg:hover:bg-blue-800 duration-500 lg:py-3 md:py-2 xs:py-1 lg:px-12 md:px-11 sm:px-6 xs:px-5  bg-secondary text-tertiary border border-tertiary sm:rounded-3xl xs:rounded-2xl">
               {" "}
               Select Pricing

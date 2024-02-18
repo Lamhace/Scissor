@@ -7,7 +7,7 @@ import "aos/dist/aos.css";
 
 export default function Accordion() {
    useEffect(() => {
-     Aos.init({ duration: 2000 });
+     Aos.init({ duration: 1000 });
    }, []);
   const [openedIndex, setOpenedIndex] = React.useState<number>(-1); // -1 means nothing is opened
 

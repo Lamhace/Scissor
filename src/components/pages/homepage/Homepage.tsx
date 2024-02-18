@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Hero from '../../hero/Hero'
 import { FiLink2 } from 'react-icons/fi'
 import { BsQrCodeScan } from 'react-icons/bs'
@@ -9,9 +9,14 @@ import Trim from '../../trim/Trim'
 import Accordion from '../../faq/Accordion'
 import Start from '../../start/Start'
 import Footer from '../../footer/Footer'
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 
 export default function Homepage() {
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  });
   return (
     // <div className='font-family'>
     <div>
@@ -53,7 +58,10 @@ export default function Homepage() {
       </div>
 
       <div className="flex lg:flex-row xs:flex-col xl:py-24 lg:py-20 md:py-16 sm:py-14 xs:py-11 2xl:px-20 xl:px-16 lg:px-14 md:px-10 sm:px-6 xs:px-7 ">
-        <div className=" 2xl:w-4/5 whyScissor xs:mb-16 sm:mb-0">
+        <div
+          data-aos="zoom-in"
+          className=" 2xl:w-4/5 whyScissor xs:mb-16 sm:mb-0"
+        >
           <div className="font-bold xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl xs:text-lg lg:mb-6 md:mb-3 sm:mb-2 xs:mb-1">
             Why choose <span className="text-secondary">Scissor?</span>
           </div>
@@ -67,7 +75,7 @@ export default function Homepage() {
         </div>
         <div className="flex xs:flex-col sm:flex-row  2xl:gap-14 xl:gap-11 lg:gap-16 sm:gap-20 xs:gap-16">
           <div className="">
-            <div>
+            <div data-aos="zoom-in">
               <div className="xl:text-3xl lg:text-2xl sm:text-base xs:text-sm font-semibold xl:mb-6 lg:mb-5 sm:mb-3 xl:p-5 lg:p-4 sm:p-3 xs:p-2 w-fit bg-blue-200 rounded-full">
                 <FiLink2 />
               </div>
@@ -79,7 +87,7 @@ export default function Homepage() {
                 Shorten your URL at scale, URL redirects.
               </div>
             </div>
-            <div>
+            <div data-aos="zoom-in">
               <div className="xl:text-3xl lg:text-2xl sm:text-base xs:text-sm font-semibold xl:mb-6 lg:mb-5 sm:mb-3 xl:p-5 lg:p-4 sm:p-3 xs:p-2 w-fit bg-blue-200 rounded-full">
                 <BsQrCodeScan />
               </div>
@@ -93,7 +101,7 @@ export default function Homepage() {
             </div>
           </div>
           <div className="">
-            <div>
+            <div data-aos="zoom-in">
               <div className="xl:text-3xl lg:text-2xl sm:text-base xs:text-sm font-semibold xl:mb-6 lg:mb-5 sm:mb-3 xl:p-5 lg:p-4 sm:p-3 xs:p-2 w-fit bg-blue-200 rounded-full">
                 <MdEditNote />
               </div>
@@ -105,7 +113,7 @@ export default function Homepage() {
                 Shorten your URL at scale, URL redirects.
               </div>
             </div>
-            <div>
+            <div data-aos="zoom-in">
               <div className="xl:text-3xl lg:text-2xl sm:text-base xs:text-sm font-semibold xl:mb-6 lg:mb-5 sm:mb-3  xl:p-5 lg:p-4 sm:p-3 xs:p-2 w-fit bg-blue-200 rounded-full">
                 <IoAnalyticsOutline />
               </div>
