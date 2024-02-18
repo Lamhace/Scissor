@@ -11,7 +11,7 @@ import "aos/dist/aos.css";
 
 export default function Footer() {
   useEffect(()=>{
-    Aos.init({duration:2000})
+    Aos.init({duration:1000})
   })
 
   return (
