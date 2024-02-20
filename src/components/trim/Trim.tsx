@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoMdArrowDropdown } from "react-icons/io";
 
-
 // const res = await https://api.shrtco.de/v2/shorten?url=${input}
 // setResult(res.data.result.full_short_link)
 
@@ -37,6 +36,7 @@ export default function Trim() {
   //     try {
   //         const res = await axios(`https://api.shrtco.de/v2/shorten?url=${url}`)
   //         setShortenedURL(res.data.result.full_short_link2)
+  //         setURL("");
   //     }
   //     catch (err) {
   //         console.log('Error messgae:', err)
@@ -72,7 +72,7 @@ export default function Trim() {
             <IoMdArrowDropdown className="absolute lg:top-5 md:top-4 sm:top-3 xs:top-2 right-5 pointer-events-none text-xl" />
           </div>
           <div>
-            <input 
+            <input
               className="border-2 lg:py-4 md:py-3 sm:py-2 xs:py-1 lg:pl-4 md:pl-3 xs:pl-2 lg:w-48 md:w-48 sm:w-48 ls:w-80 xs:w-72 rounded-2xl border-secondary"
               type="text"
               placeholder="Type Alias here"

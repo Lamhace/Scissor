@@ -55,8 +55,6 @@ export default function Loginpage() {
           console.log("Authenticated user:", user);
           dispatch(logIn());
           navigate("/", { replace: true });
-          console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`)
-          console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`);
         })
         .catch((error) => {
           // An error occurred during sign-in
@@ -64,6 +62,8 @@ export default function Loginpage() {
         });
     }
   }
+
+
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
