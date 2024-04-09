@@ -67,6 +67,7 @@ export default function Header() {
           duration={1000}
         >
           <li>Pricing</li>
+          
         </Link>
         <Link
           to="analytics"

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { GiBoxCutter } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { error } from "console";
 
 // const res = await https://api.shrtco.de/v2/shorten?url=${input}
 // setResult(res.data.result.full_short_link)
@@ -13,6 +14,7 @@ export default function Trim() {
   const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
   const [url, setURL] = React.useState("");
   const [shortenedURL, setShortenedURL] = React.useState("");
+  //const [error, setError] = useState("");
   const navigate = useNavigate();
 
   function userURL(event: any) {
@@ -40,6 +42,7 @@ export default function Trim() {
   //     }
   //     catch (err) {
   //         console.log('Error messgae:', err)
+  //       setError('Error generating URL. Try again')
   //     }
   // }
 
@@ -100,6 +103,10 @@ export default function Trim() {
           and Use of Cookies.
         </div>
       </div>
+      {/* <div className="flex justify-center items-center text-red-500">
+        {error}
+      </div> */}
+
       {shortenedURL && (
         <div className="flex flex-col gap-4 justify-center items-center bg-tertiary 2xl:w-1/4 xl:w-2/4 lg:w-2/4 sm:w-2/4 md:w-2/4 ls:w-80 xs:w-72 lg:py-5 md:py-4 sm:py-5 xs:py-4 relative ">
           <div className=" text-secondary md:text-2xl sm:text-xl xs:text-lg">

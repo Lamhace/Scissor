@@ -13,7 +13,7 @@ export default function NavModal({ isModalOpen, logOut }: any) {
   return (
     <div
       // data-aos="fade-left"
-      className={`absolute top-0 w-full flex flex-col xs:gap-5 sm:hidden sm:pointer-events-none  bg-tertiary h-screen items-center xs:pt-36 xs:text-base`}
+      className={` sticky top-0 h-screen  w-full flex flex-col xs:gap-5 sm:hidden sm:pointer-events-none  bg-tertiary items-center xs:pt-36 xs:text-base`}
     >
       <div className="">My URLs</div>
       <div>Features</div>

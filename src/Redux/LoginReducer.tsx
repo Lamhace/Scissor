@@ -21,7 +21,7 @@ const loginSlice = createSlice({
     },
     logIn: (state) => {
       state.isLoggedIn = true;
-    },
+    }
   },
 });
 

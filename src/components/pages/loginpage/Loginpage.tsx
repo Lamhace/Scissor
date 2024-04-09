@@ -22,14 +22,21 @@ export default function Loginpage() {
   });
   const [errorMessage, setErrorMessage] = React.useState("");
 
+  // function loginChange(event: React.ChangeEvent<HTMLInputElement>) {
+  //   setLoginData((prevLoginData) => {
+  //     return {
+  //       ...prevLoginData,
+  //       [event.target.name]: event.target.value,
+  //     };
+  //   });
+  // } 
   function loginChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setLoginData((prevLoginData) => {
-      return {
-        ...prevLoginData,
-        [event.target.name]: event.target.value,
-      };
+    setLoginData({
+        ...loginData,
+        [event.target.name]: event.target.value
     });
   }
+
 
   function submitLoginData(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
