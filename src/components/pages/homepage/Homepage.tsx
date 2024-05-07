@@ -1,25 +1,57 @@
-import React, { useEffect } from 'react'
-import Hero from '../../hero/Hero'
-import { FiLink2 } from 'react-icons/fi'
-import { BsQrCodeScan } from 'react-icons/bs'
-import { IoAnalyticsOutline } from 'react-icons/io5'
-import { MdEditNote } from 'react-icons/md'
-import Subscription from '../../subscription/Subscription'
-import Trim from '../../trim/Trim'
-import Accordion from '../../faq/Accordion'
-import Start from '../../start/Start'
-import Footer from '../../footer/Footer'
+import React, { useEffect } from "react";
+import Hero from "../../hero/Hero";
+import { FiLink2 } from "react-icons/fi";
+import { BsQrCodeScan } from "react-icons/bs";
+import { IoAnalyticsOutline } from "react-icons/io5";
+import { MdEditNote } from "react-icons/md";
+import Subscription from "../../subscription/Subscription";
+import Trim from "../../trim/Trim";
+import Accordion from "../../faq/Accordion";
+import Start from "../../start/Start";
+import Footer from "../../footer/Footer";
 import Aos from "aos";
 import "aos/dist/aos.css";
-
+import { LuAlignJustify } from "react-icons/lu";
+import { LuX } from "react-icons/lu";
+import { openNav, closeNav } from "../../../Redux/HamburgerReducer";
+import { useDispatch, useSelector } from "react-redux";
+import logo from "../../../images/HeaderLogo.svg";
 
 export default function Homepage() {
+  const dispatch = useDispatch();
+  const { isNavOpen } = useSelector((store: any) => store.isNavOpen);
+
   useEffect(() => {
     Aos.init({ duration: 2000 });
   });
   return (
-    // <div className='font-family'>
-    <div>
+    <div className="relative">
+      {/* HAMBURGER MENU */}
+      <img
+        src={logo}
+        alt="logoImg"
+        className="absolute xs:top-5 xs:left-4 sm:w-28 xs:w-20 md:hidden"
+      />
+      <span className="absolute sm:top-4 xs:top-3 sm:right-7 xs:right-4 z-50">
+        <LuAlignJustify
+          className={` xs:top-3 sm:top-4 sm:right-7 xs:right-4 sm:text-3xl xs:text-2xl md:hidden z-50 transition ease-out duration-200 ${
+            isNavOpen
+              ? "invisible pointer-events-none opacity-0"
+              : "visible pointer-events-auto opacity-100"
+          } `}
+          onClick={() => dispatch(openNav())}
+        />
+        <LuX
+          className={` sm:top-4 xs:top-3 sm:right-7 xs:right-4 sm:text-3xl xs:text-2xl md:hidden z-50 transition ease-out duration-200 ${
+            isNavOpen
+              ? "visible pointer-events-auto opacity-100 fixed"
+              : "invisible pointer-events-none opacity-0"
+          }`}
+          onClick={() => dispatch(closeNav())}
+        />
+      </span>
+
+      {/* HERO SECTION */}
       <Hero />
       <div
         className="xs:flex  xs:flex-col xs:gap-8 sm:gap-0 xs:justify-center sm:text-start xs:text-center sm:flex-row  lg:py-16 md:py-12 sm:py-8 xs:py-7 2xl:px-24  xl:px-20 lg:px-16 md:px-14 sm:px-6 sm:justify-between bg-blue-50"
@@ -136,6 +168,3 @@ export default function Homepage() {
     </div>
   );
 }
-
-
-

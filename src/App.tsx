@@ -13,19 +13,14 @@ export const Firebase = initializeApp(firebaseConfig);
 function App() {
   return (
     <Router>
-      <div>
+      <div className="">
         <Routes>
           {/* <Route path="/" element={<Loginpage />} />
           <Route path='/homepage' element={<AuthRoute><Homepage/></AuthRoute>} />
           <Route path="/signup" element={<Signuppage />} /> */}
 
           <Route path="/login" element={<Loginpage />} />
-          <Route
-            path="/"
-            element={
-                <Homepage />
-            }
-          />
+          <Route path="/" element={<Homepage />} />
           <Route path="/signup" element={<Signuppage />} />
         </Routes>
       </div>

@@ -17,7 +17,7 @@ export default function Header() {
   function logout() {
     dispatch(logOut());
     navigate("/login");
-    console.log(`isLoggedIn value is this gangan: ${isLoggedIn}`);
+    console.log(`isLoggedIn value is: ${isLoggedIn}`);
   }
 
   const [isOpen, setIsOpen] = React.useState(false);

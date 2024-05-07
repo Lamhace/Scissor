@@ -43,6 +43,7 @@ export default function Loginpage() {
     const hasUppercase = /[A-Z]/.test(loginData.password);
     const hasLowercase = /[a-z]/.test(loginData.password);
     const hasNumber = /[0-9]/.test(loginData.password);
+    
 
     if (
       loginData.password.length < 6 ||
