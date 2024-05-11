@@ -89,11 +89,11 @@ export default function Homepage() {
         </div>
       </div>
 
-      <div className="flex lg:flex-row xs:flex-col xl:py-24 lg:py-20 md:py-16 sm:py-14 xs:py-11 2xl:px-20 xl:px-16 lg:px-14 md:px-10 sm:px-6 xs:px-7 ">
-        <div
-          data-aos="zoom-in"
-          className=" 2xl:w-4/5 whyScissor xs:mb-16 sm:mb-0"
-        >
+      <div
+        data-aos="zoom-in"
+        className="flex lg:flex-row xs:flex-col xl:py-24 lg:py-20 md:py-16 sm:py-14 xs:py-11 2xl:px-20 xl:px-16 lg:px-14 md:px-10 sm:px-6 xs:px-7 "
+      >
+        <div className=" 2xl:w-4/5 whyScissor xs:mb-16 sm:mb-0">
           <div className="font-bold xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl xs:text-lg lg:mb-6 md:mb-3 sm:mb-2 xs:mb-1">
             Why choose <span className="text-secondary">Scissor?</span>
           </div>
