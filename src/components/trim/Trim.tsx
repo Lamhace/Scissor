@@ -91,7 +91,7 @@ export default function Trim() {
             <GiBoxCutter />
           </span>
         </button>
-        <div className=" text-secondary xl:w-full lg:w-2/4 xs:w-2/3 xs sm:px-0 xs:px-2 sm:text-base xs:text-sm ">
+        <div className=" text-secondary xl:px-16 lg:px-10 md:px-9 sm:px-6 xs:px-4 sm:text-base xs:text-sm ">
           By clicking TrimURL, I agree to the{" "}
           <span className="md:font-semibold sm:font-medium">
             Terms of Service
