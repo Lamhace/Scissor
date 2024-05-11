@@ -30,7 +30,7 @@ export default function Homepage() {
       <img
         src={logo}
         alt="logoImg"
-        className="absolute sm:top-6 xs:top-5 xs:left-4 sm:w-28 xs:w-20 md:hidden"
+        className="absolute  xs:top-6 xs:left-4 sm:w-28 xs:w-20 md:hidden"
       />
       <span className="absolute sm:top-6 xs:top-5 sm:right-7 xs:right-4 z-50">
         <LuAlignJustify
@@ -107,7 +107,7 @@ export default function Homepage() {
         </div>
         <div className="flex xs:flex-col sm:flex-row  2xl:gap-14 xl:gap-11 lg:gap-16 sm:gap-20 xs:gap-16">
           <div className="">
-            <div data-aos="zoom-in">
+            <div>
               <div className="xl:text-3xl lg:text-2xl sm:text-base xs:text-sm font-semibold xl:mb-6 lg:mb-5 sm:mb-3 xl:p-5 lg:p-4 sm:p-3 xs:p-2 w-fit bg-blue-200 rounded-full">
                 <FiLink2 />
               </div>
@@ -119,7 +119,7 @@ export default function Homepage() {
                 Shorten your URL at scale, URL redirects.
               </div>
             </div>
-            <div data-aos="zoom-in">
+            <div>
               <div className="xl:text-3xl lg:text-2xl sm:text-base xs:text-sm font-semibold xl:mb-6 lg:mb-5 sm:mb-3 xl:p-5 lg:p-4 sm:p-3 xs:p-2 w-fit bg-blue-200 rounded-full">
                 <BsQrCodeScan />
               </div>
@@ -133,7 +133,7 @@ export default function Homepage() {
             </div>
           </div>
           <div className="">
-            <div data-aos="zoom-in">
+            <div>
               <div className="xl:text-3xl lg:text-2xl sm:text-base xs:text-sm font-semibold xl:mb-6 lg:mb-5 sm:mb-3 xl:p-5 lg:p-4 sm:p-3 xs:p-2 w-fit bg-blue-200 rounded-full">
                 <MdEditNote />
               </div>
@@ -145,7 +145,7 @@ export default function Homepage() {
                 Shorten your URL at scale, URL redirects.
               </div>
             </div>
-            <div data-aos="zoom-in">
+            <div>
               <div className="xl:text-3xl lg:text-2xl sm:text-base xs:text-sm font-semibold xl:mb-6 lg:mb-5 sm:mb-3  xl:p-5 lg:p-4 sm:p-3 xs:p-2 w-fit bg-blue-200 rounded-full">
                 <IoAnalyticsOutline />
               </div>
