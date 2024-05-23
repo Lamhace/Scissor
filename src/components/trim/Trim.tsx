@@ -25,9 +25,14 @@ export default function Trim() {
 
   function newUserURL() {
     if (isLoggedIn) {
-      setShortenedURL(
-        url.substring(0, Math.floor(Math.random() * url.length) + 1)
-      );
+      if (url) {
+        setShortenedURL(
+          url.substring(0, Math.floor(Math.random() * url.length) + 1)
+        );
+      }
+      //  setShortenedURL(
+      //    url.substring(0, Math.floor(Math.random() * url.length) + 1)
+      //  );
     } else {
       navigate("/login");
     }
@@ -41,10 +46,20 @@ export default function Trim() {
   //         setURL("");
   //     }
   //     catch (err) {
-  //         console.log('Error messgae:', err)
+  //         console.log('Error message:', err)
   //       setError('Error generating URL. Try again')
   //     }
   // }
+
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(shortenedURL);
+    setCopied(true);
+  };
+  const clearShortenedURL = () => {
+    setShortenedURL("");
+    setCopied(false);
+  };
 
   return (
     <div
@@ -86,7 +101,9 @@ export default function Trim() {
           className="flex sm:transition sm:hover:bg-blue-800 duration-75  items-center md:gap-7 sm:gap-6 xs:gap-5 justify-center text-tertiary bg-secondary pl-2 sm:w-96 ls:w-80 xs:w-72 lg:py-4 md:py-3 sm:py-2 xs:py-1 sm:rounded-3xl xs:rounded-2xl md:mt-6 sm:mt-5 xs:mt-4 sm:mb-8 xs:mb-7"
           onClick={newUserURL}
         >
-          <span className="">Trim URL</span>
+          <span onClick={() => setCopied(false)} className="">
+            Trim URL
+          </span>
           <span className="">
             <GiBoxCutter />
           </span>
@@ -112,12 +129,18 @@ export default function Trim() {
           <div className=" text-secondary md:text-2xl sm:text-xl xs:text-lg">
             Generated Shortened URL:
           </div>
-          <div className="text-deepblue md:text-xl sm:text-lg xs:text-base">
-            {shortenedURL}
+          <div className="flex justify-center items-center flex-col gap-3 text-deepblue md:text-xl sm:text-lg xs:text-base">
+            <div>{shortenedURL}</div>
+            <div
+              onClick={handleCopy}
+              className=" py-2 px-6 bg-deepblue text-white rounded-2xl cursor-pointer hover:scale-x-110 transition-all duration-75"
+            >
+              {copied ? "Copied" : "Copy"}
+            </div>
           </div>
 
           <AiOutlineClose
-            onClick={() => setShortenedURL("")}
+            onClick={clearShortenedURL}
             className="absolute top-0 right-0 lg:text-3xl  sm:text-2xl ls:text-xl xs:text-lg text-red-500 transition hover:text-red-600 duration-100"
           />
         </div>

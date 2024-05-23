@@ -30,11 +30,11 @@ export default function Homepage() {
       <img
         src={logo}
         alt="logoImg"
-        className="absolute  xs:top-6 xs:left-4 sm:w-28 xs:w-20 md:hidden"
+        className="absolute  xs:top-7 sm:top-8 xs:left-4 sm:w-32 xs:w-24 md:hidden"
       />
-      <span className="absolute sm:top-6 xs:top-5 sm:right-7 xs:right-4 z-50">
+      <span className="absolute sm:top-7 xs:top-6 sm:right-7 xs:right-4 z-50">
         <LuAlignJustify
-          className={` xs:top-6 sm:right-7 xs:right-4 sm:text-3xl xs:text-2xl md:hidden z-50 transition ease-out duration-200 ${
+          className={` xs:top-7 sm:right-7  sm:text-4xl xs:text-3xl md:hidden z-50 transition ease-out duration-200 ${
             isNavOpen
               ? "invisible pointer-events-none opacity-0"
               : "visible pointer-events-auto opacity-100"
@@ -42,7 +42,7 @@ export default function Homepage() {
           onClick={() => dispatch(openNav())}
         />
         <LuX
-          className={` xs:top-6 sm:right-7 xs:right-4 sm:text-3xl xs:text-2xl md:hidden z-50 transition ease-out duration-200 ${
+          className={` xs:top-7 sm:right-7 xs:right-4 sm:text-4xl xs:text-3xl md:hidden z-50 transition ease-out duration-200 ${
             isNavOpen
               ? "visible pointer-events-auto opacity-100 fixed"
               : "invisible pointer-events-none opacity-0"
