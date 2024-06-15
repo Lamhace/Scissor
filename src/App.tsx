@@ -10,6 +10,7 @@ import AuthRoute from "./components/AuthRoute";
 
 export const Firebase = initializeApp(firebaseConfig);
 
+
 function App() {
   return (
     <Router>

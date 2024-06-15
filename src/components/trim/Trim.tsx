@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux";
 import { GiBoxCutter } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
@@ -37,20 +37,26 @@ export default function Trim() {
       navigate("/login");
     }
     setURL("");
-    setCopied(false)
+    setCopied(false);
   }
 
   // const newUserURL = async () => {
+  //   if (isLoggedIn) {
   //     try {
-  //         const res = await axios(`https://api.shrtco.de/v2/shorten?url=${url}`)
-  //         setShortenedURL(res.data.result.full_short_link2)
-  //         setURL("");
+  //       const res = await axios.post(
+  //         `https://url-shortener-api.herokuapp.com/shorten`, {url}
+  //       );
+  //       setShortenedURL(res.data.shortUrl);
+  //       setURL("");
+  //     } catch (err) {
+  //       console.log("Error message:", err);
+  //       // setError("Error generating URL. Try again");
   //     }
-  //     catch (err) {
-  //         console.log('Error message:', err)
-  //       setError('Error generating URL. Try again')
-  //     }
-  // }
+  //   } else {
+  //     navigate("/login");
+  //   }
+  //   setCopied(false);
+  // };
 
   const [copied, setCopied] = useState(false);
   const handleCopy = () => {
@@ -102,9 +108,7 @@ export default function Trim() {
           className="flex sm:transition sm:hover:bg-blue-800 duration-75  items-center md:gap-7 sm:gap-6 xs:gap-5 justify-center text-tertiary bg-secondary pl-2 sm:w-96 ls:w-80 xs:w-72 lg:py-4 md:py-3 sm:py-2 xs:py-1 sm:rounded-3xl xs:rounded-2xl md:mt-6 sm:mt-5 xs:mt-4 sm:mb-8 xs:mb-7"
           onClick={newUserURL}
         >
-          <span className="">
-            Trim URL
-          </span>
+          <span className="">Trim URL</span>
           <span className="">
             <GiBoxCutter />
           </span>
@@ -131,7 +135,7 @@ export default function Trim() {
             Generated Shortened URL:
           </div>
           <div className="flex justify-center items-center flex-col gap-3 text-deepblue md:text-xl sm:text-lg xs:text-base">
-            <div>{shortenedURL}</div>
+            <div data-testid="shortenedUrl">{shortenedURL}</div>
             <div
               onClick={handleCopy}
               className=" py-2 px-6 bg-deepblue text-white rounded-2xl cursor-pointer hover:scale-x-110 transition-all duration-75"

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
 import { logIn } from "../../../Redux/LoginReducer";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 export default function Loginpage() {
@@ -81,11 +81,11 @@ export default function Loginpage() {
   return (
     <div>
       <div className=" flex flex-col items-center justify-center py-24">
-        <div className="flex">
+        <div data-testid='continueWithGoogle' className="flex">
           <GoogleApple />
         </div>
 
-        <form className="" onSubmit={submitLoginData}>
+        <form data-testid='form' className="" onSubmit={submitLoginData}>
           <div className="flex items-center justify-center">
             <input
               className=" xs:pl-3 ls:pl-4 sm:pl-5 xs:w-72 ls:w-80 sm:w-96 border-2 xs:py-1 ls:py-2 sm:py-3  border-secondary rounded-xl mb-5"
