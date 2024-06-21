@@ -137,7 +137,7 @@ export default function Trim() {
         </div>
       </div>
       {error && (
-        <div className="text-red-500 flex justify-center items-center flex-col gap-3 md:text-xl sm:text-lg xs:text-base">
+        <div className="text-red-500 flex justify-center items-center flex-col gap-3 md:text-xl sm:text-sm xs:text-xs">
           {error}
         </div>
       )}
