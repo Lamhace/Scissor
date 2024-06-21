@@ -26,6 +26,11 @@ describe("INPUT FIELD", () => {
     const inputElement = screen.getByPlaceholderText("Place URL here...");
     expect(inputElement).toHaveTextContent("");
   });
+  test("should show absence of shortenedUrl", async () => {
+    render(<MockedTrimPage />);
+    const shortenedUrl = screen.queryByTestId("shortenedUrl");
+    expect(shortenedUrl).not.toBeInTheDocument();
+  });
   test("should contain an empty input field with a value when user clicks and enter text ", () => {
     render(<MockedTrimPage />);
     const inputElement = screen.getByPlaceholderText(
@@ -48,5 +53,18 @@ describe("INPUT FIELD", () => {
     expect(inputElement.value).toBe("Www.premierLeague.com");
     fireEvent.click(btn);
     expect(inputElement.value).toBe("");
+  });
+  test("should show presence of shortenedUrl", async () => {
+    render(<MockedTrimPage />);
+    const inputElement = screen.getByPlaceholderText(
+      "Place URL here..."
+    ) as HTMLInputElement;
+    const shortenedUrl = screen.findByTestId("shortenedUrl");
+    fireEvent.change(inputElement, {
+      target: { value: "Www.premierLeague.com" },
+    });
+    const btn = screen.getByRole("button");
+    fireEvent.click(btn);
+    expect(shortenedUrl).toBeInTheDocument();
   });
 });
