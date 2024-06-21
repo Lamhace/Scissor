@@ -5,6 +5,7 @@ import store from "../../../Redux/Store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
+
 const MockedTrimPage = () => {
   return (
     <BrowserRouter>
@@ -59,7 +60,7 @@ describe("INPUT FIELD", () => {
     const inputElement = screen.getByPlaceholderText(
       "Place URL here..."
     ) as HTMLInputElement;
-    const shortenedUrl = screen.findByTestId("shortenedUrl");
+    const shortenedUrl = await screen.findByTestId("shortenedUrl");
     fireEvent.change(inputElement, {
       target: { value: "Www.premierLeague.com" },
     });

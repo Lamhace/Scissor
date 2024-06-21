@@ -5,7 +5,6 @@ import { GiBoxCutter } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { error } from "console";
 
 export default function Trim() {
   const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
@@ -45,9 +44,7 @@ export default function Trim() {
       );
       return response.data.link;
     } catch (error) {
-      console.error(
-        "Error shortening URL:", error
-      );
+      console.error("Error shortening URL:", error);
       throw error;
     }
   };
@@ -139,7 +136,11 @@ export default function Trim() {
           and Use of Cookies.
         </div>
       </div>
-      {error && <div className="text-red-500 mt-4">{error}</div>}
+      {error && (
+        <div className="text-red-500 flex justify-center items-center flex-col gap-3 md:text-xl sm:text-lg xs:text-base">
+          {error}
+        </div>
+      )}
       {shortUrl && (
         <div className="flex flex-col gap-4 justify-center items-center bg-tertiary 2xl:w-1/4 xl:w-2/4 lg:w-2/4 sm:w-2/4 md:w-2/4 ls:w-80 xs:w-72 lg:py-5 md:py-4 sm:py-5 xs:py-4 relative">
           <div className="text-secondary md:text-2xl sm:text-xl xs:text-lg">
