@@ -50,6 +50,9 @@ export default function Trim() {
   };
 
   const handleShortenUrl = async () => {
+    if (!longUrl) {
+      return;
+    }
     if (!validateUrl(longUrl)) {
       setError("Invalid URL format. Please enter a valid URL.");
       return;
