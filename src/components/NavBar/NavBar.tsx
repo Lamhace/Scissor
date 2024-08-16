@@ -21,7 +21,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`flex md:flex-row xs:flex-col md:justify-between md:gap-0 xs:gap-7 xs:justify-center items-center  xl:text-xl lg:text-lg md:text-base xs:text-sm font-semibold px-10 cursor-pointer xs:fixed xs:h-screen w-full md:sticky md:h-16 z-30 md:bg-transparent xs:bg-tertiary md:visible md:pointer-events-auto md:opacity-100 duration-300 ${
+      className={`flex md:flex-row xs:flex-col md:justify-between md:gap-0 xs:gap-7 xs:justify-center items-center  xl:text-xl lg:text-lg sm:text-base xs:text-base font-semibold px-10 cursor-pointer xs:fixed xs:h-screen w-full md:sticky md:h-16 z-30 md:bg-transparent xs:bg-tertiary md:visible md:pointer-events-auto md:opacity-100 duration-300 ease-linear ${
         isNavOpen
           ? " translate-x-0  xs:visible xs:pointer-events-auto xs:opacity-100"
           : " translate-x-full md:translate-x-0  xs:invisible xs:pointer-events-none xs:opacity-0"
