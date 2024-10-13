@@ -28,9 +28,9 @@ const NavBar = () => {
       }  `}
     >
       <div className=" xs:hidden md:block ">
-        <img src={logo} alt="LogoImg" />
+        <img src={logo} alt="LogoImg" className=" md:w-28 lg:w-32 xl:w-36  " />
       </div>
-      <div className="flex md:flex-row xs:flex-col items-center md:gap-12 xs:gap-7">
+      <div className="flex md:flex-row xs:flex-col items-center lg:gap-10 md:gap-7 xs:gap-6 xl:text-xl lg:text-lg md:text-sm">
         <div onClick={() => dispatch(closeNav())}>My URLs</div>
         <div>Features</div>
         <div>
@@ -69,7 +69,7 @@ const NavBar = () => {
         </div>
       </div>
       <div
-        className="flex md:flex-row xs:flex-col items-center md:gap-5 xs:gap-7"
+        className="flex md:flex-row xs:flex-col items-center lg:gap-10 md:gap-7  xs:gap-7 xl:text-xl lg:text-lg md:text-sm"
         onClick={() => dispatch(closeNav())}
       >
         {isLoggedIn ? (
