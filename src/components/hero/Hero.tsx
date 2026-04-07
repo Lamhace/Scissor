@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from '../NavBar/NavBar';
-import { FiScissors, FiArrowRight, FiLink, FiZap } from 'react-icons/fi';
+import { FiScissors, FiArrowRight, FiZap } from 'react-icons/fi';
 import { Link } from 'react-scroll';
 
 export default function Hero() {

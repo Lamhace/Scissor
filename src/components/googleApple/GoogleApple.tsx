@@ -14,8 +14,8 @@ export default function GoogleApple() {
   function continueWithGoogle() {
     signInWithPopup(auth, provider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
+        const _credential = GoogleAuthProvider.credentialFromResult(result);
+        const _user = result.user;
         dispatch(logIn());
         navigate("/");
       }).catch((error) => {

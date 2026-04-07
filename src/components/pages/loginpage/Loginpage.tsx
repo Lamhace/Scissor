@@ -37,7 +37,7 @@ export default function Loginpage() {
 
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, loginData.email, loginData.password);
+      const _userCredential = await signInWithEmailAndPassword(auth, loginData.email, loginData.password);
       dispatch(logIn());
       navigate("/", { replace: true });
     } catch (error) {
