@@ -1,0 +1,26 @@
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Homepage from "./components/pages/homepage/Homepage";
+import Signuppage from "./components/pages/signuppage/Signuppage";
+import Loginpage from "./components/pages/loginpage/Loginpage";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "./firebaseConfig";
+
+export const Firebase = initializeApp(firebaseConfig);
+
+function App() {
+  return (
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/login" element={<Loginpage />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/signup" element={<Signuppage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
