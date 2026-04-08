@@ -4,8 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
-* { box-sizing: border-box; }
+/* ─────────────────────────────────────────────────────────────────────────
+   All custom CSS below @tailwind utilities so it wins the cascade.
+   ───────────────────────────────────────────────────────────────────────── */
 
+* { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 body {
@@ -17,37 +20,156 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+h1,h2,h3,h4,h5,h6 { font-family: 'Space Grotesk', sans-serif; }
 
-/* ─── input icon padding fix ─────────────────────────────────────────────── */
-/* All icon-prefixed inputs use this class to guarantee placeholder clears icon */
+input, select { outline: none; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-thumb { background: #6c63ff; border-radius: 3px; }
+
+/* ── Glassmorphism ───────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.glass-dark {
+  background: rgba(10,10,15,0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(108,99,255,0.2);
+}
+
+/* ── Gradient text ───────────────────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg,#6c63ff,#00f5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Grid bg ─────────────────────────────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(108,99,255,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(108,99,255,0.05) 1px,transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* ── Nav link ────────────────────────────────────────────────────────────── */
+.nav-link {
+  position: relative;
+  color: #a0aec0;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg,#6c63ff,#00f5ff);
+  transition: width 0.3s ease;
+}
+.nav-link:hover { color: #fff; }
+.nav-link:hover::after { width: 100%; }
+
+/* ── Stat number ─────────────────────────────────────────────────────────── */
+.stat-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  background: linear-gradient(135deg,#fff 0%,#6c63ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.btn-primary {
+  background: linear-gradient(135deg,#6c63ff,#4f46e5);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+  transition: left 0.5s ease;
+}
+.btn-primary:hover::before { left: 100%; }
+.btn-primary:hover { box-shadow: 0 8px 30px rgba(108,99,255,0.5); transform: translateY(-2px); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ── Feature cards ───────────────────────────────────────────────────────── */
+.feature-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(108,99,255,0.15);
+  border-radius: 20px;
+  padding: 28px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg,transparent,#6c63ff,transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.feature-card:hover { border-color: rgba(108,99,255,0.4); background: rgba(108,99,255,0.05); transform: translateY(-5px); box-shadow: 0 20px 50px rgba(108,99,255,0.12); }
+.feature-card:hover::before { opacity: 1; }
+
+/* ── Pricing cards ───────────────────────────────────────────────────────── */
+.pricing-card {
+  border-radius: 24px;
+  padding: 36px 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.pricing-card-featured {
+  background: linear-gradient(145deg,#6c63ff 0%,#4f46e5 55%,#0f3460 100%);
+  box-shadow: 0 24px 60px rgba(108,99,255,0.35);
+}
+
+/* ── Input with icon ─────────────────────────────────────────────────────── */
 .input-with-icon {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(108, 99, 255, 0.3);
+  border: 1px solid rgba(108,99,255,0.3);
   border-radius: 12px;
   color: white;
-  padding: 14px 18px 14px 44px;   /* <-- left side always 44px (icon 16px + 14px gap) */
+  padding: 14px 18px 14px 44px;
   width: 100%;
   transition: all 0.3s ease;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.9rem;
 }
-
 .input-with-icon:focus {
   border-color: #6c63ff;
-  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
-  background: rgba(108, 99, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+  background: rgba(108,99,255,0.05);
   outline: none;
 }
-
-.input-with-icon::placeholder { color: rgba(160, 174, 192, 0.55); }
-
+.input-with-icon::placeholder { color: rgba(160,174,192,0.55); }
 .input-with-icon.has-right-btn { padding-right: 48px; }
 
-/* Base scissor-input (no icon) */
+/* ── scissor-input (no icon) ─────────────────────────────────────────────── */
 .scissor-input {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(108, 99, 255, 0.3);
+  border: 1px solid rgba(108,99,255,0.3);
   border-radius: 12px;
   color: white;
   padding: 14px 18px;
@@ -56,112 +178,23 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
   font-family: 'DM Sans', sans-serif;
   font-size: 0.9rem;
 }
-
 .scissor-input:focus {
   border-color: #6c63ff;
-  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
-  background: rgba(108, 99, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+  background: rgba(108,99,255,0.05);
   outline: none;
 }
+.scissor-input::placeholder { color: rgba(160,174,192,0.55); }
+select.scissor-input, select.input-with-icon { appearance: none; -webkit-appearance: none; }
+select.scissor-input option, select.input-with-icon option { background: #1a1a2e; color: white; }
 
-.scissor-input::placeholder { color: rgba(160, 174, 192, 0.55); }
-
-select.scissor-input, select.input-with-icon {
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-select.scissor-input option,
-select.input-with-icon option {
-  background: #1a1a2e;
-  color: white;
-}
-
-input, select { outline: none; }
-
-/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0a0a0f; }
-::-webkit-scrollbar-thumb { background: #6c63ff; border-radius: 3px; }
-
-/* ─── Glassmorphism ──────────────────────────────────────────────────────── */
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-dark {
-  background: rgba(10, 10, 15, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(108, 99, 255, 0.2);
-}
-
-/* ─── Gradient text ──────────────────────────────────────────────────────── */
-.gradient-text {
-  background: linear-gradient(135deg, #6c63ff, #00f5ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-text-warm {
-  background: linear-gradient(135deg, #ff6b6b, #ffd93d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ─── Glow ───────────────────────────────────────────────────────────────── */
-.glow-purple { box-shadow: 0 0 20px rgba(108, 99, 255, 0.4); }
-.glow-cyan   { box-shadow: 0 0 20px rgba(0, 245, 255, 0.3); }
-
-/* ─── Grid bg ────────────────────────────────────────────────────────────── */
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(108, 99, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(108, 99, 255, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-
-/* ─── Nav link ───────────────────────────────────────────────────────────── */
-.nav-link {
-  position: relative;
-  color: #a0aec0;
-  transition: color 0.3s ease;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #6c63ff, #00f5ff);
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover { color: #fff; }
-.nav-link:hover::after { width: 100%; }
-
-/* ─── Accordion ──────────────────────────────────────────────────────────── */
+/* ── Accordion ───────────────────────────────────────────────────────────── */
 .accordion-item {
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.06);
-  overflow: hidden;           /* clip answer panel */
+  overflow: hidden;
   transition: border-color 0.3s ease, background 0.3s ease;
 }
-
-.accordion-item.is-open {
-  border-color: rgba(108, 99, 255, 0.4);
-  background: rgba(108, 99, 255, 0.04);
-}
-
 .accordion-question {
   width: 100%;
   display: flex;
@@ -174,7 +207,6 @@ input, select { outline: none; }
   cursor: pointer;
   gap: 16px;
 }
-
 .accordion-question-text {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 500;
@@ -183,31 +215,17 @@ input, select { outline: none; }
   flex: 1;
   transition: color 0.2s ease;
 }
-
-.accordion-item.is-open .accordion-question-text { color: #fff; }
-
 .accordion-icon {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 28px; height: 28px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   background: rgba(255,255,255,0.05);
-  color: #a0aec0;
-  font-size: 13px;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  color: #a0aec0; font-size: 13px;
+  transition: background 0.3s, color 0.3s, transform 0.3s;
 }
-
-.accordion-item.is-open .accordion-icon {
-  background: #6c63ff;
-  color: #fff;
-  transform: rotate(45deg);
-}
-
 .accordion-answer {
-  padding: 0 24px 20px 24px;
+  padding: 0 24px 20px;
   color: #a0aec0;
   font-size: 0.875rem;
   line-height: 1.7;
@@ -215,121 +233,91 @@ input, select { outline: none; }
   padding-top: 16px;
 }
 
-/* ─── Pricing cards ──────────────────────────────────────────────────────── */
-.pricing-card {
-  border-radius: 24px;
-  padding: 36px 28px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  position: relative;
-}
-
-.pricing-card-featured {
-  background: linear-gradient(145deg, #6c63ff 0%, #4f46e5 55%, #0f3460 100%);
-  box-shadow: 0 24px 60px rgba(108, 99, 255, 0.35);
-}
-
-/* ─── Button ─────────────────────────────────────────────────────────────── */
-.btn-primary {
-  background: linear-gradient(135deg, #6c63ff, #4f46e5);
-  color: white;
-  padding: 12px 32px;
-  border-radius: 50px;
-  font-weight: 600;
-  font-family: 'Space Grotesk', sans-serif;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  transition: left 0.5s ease;
-}
-
-.btn-primary:hover::before { left: 100%; }
-.btn-primary:hover {
-  box-shadow: 0 8px 30px rgba(108, 99, 255, 0.5);
-  transform: translateY(-2px);
-}
-
-.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-/* ─── Feature cards ──────────────────────────────────────────────────────── */
-.feature-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(108, 99, 255, 0.15);
-  border-radius: 20px;
-  padding: 28px;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, #6c63ff, transparent);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.feature-card:hover {
-  border-color: rgba(108, 99, 255, 0.4);
-  background: rgba(108, 99, 255, 0.05);
-  transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(108, 99, 255, 0.12);
-}
-
-.feature-card:hover::before { opacity: 1; }
-
-/* ─── Stat number ────────────────────────────────────────────────────────── */
-.stat-number {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  background: linear-gradient(135deg, #fff 0%, #6c63ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ─── Mobile nav ─────────────────────────────────────────────────────────── */
-.mobile-nav {
-  background: rgba(10, 10, 15, 0.98);
-  backdrop-filter: blur(30px);
-}
-
-/* ─── Animations ─────────────────────────────────────────────────────────── */
+/* ── Animations ──────────────────────────────────────────────────────────── */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-18px); }
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-18px); }
 }
-
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .animate-float      { animation: float 6s ease-in-out infinite; }
 .animate-pulse-slow { animation: pulse 4s ease-in-out infinite; }
 
-/* ─── Responsive helpers ─────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .pricing-card { padding: 28px 20px; }
-  .feature-card { padding: 22px 18px; }
-  .accordion-question { padding: 16px 18px; }
-  .accordion-answer   { padding: 0 18px 16px; padding-top: 14px; }
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE VISIBILITY — Hamburger / Desktop Nav separation
+   ─────────────────────────────────────────────────────────────────────────
+   Rules here must override anything above. They are intentionally placed
+   at the end of the file so they have the highest cascade position.
+
+   KEY PRINCIPLE: The elements that toggle visibility must NOT have a
+   `display` property in their inline style. The CSS class is the sole
+   authority on display. This file sets the defaults and the overrides.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── DEFAULTS (applied at all widths, then overridden per breakpoint) ── */
+
+/* Desktop nav: visible by default (≥768px) */
+.desktop-nav-wrapper {
+  display: block !important;
 }
 
+/* Mobile header bar (logo + hamburger): hidden by default (desktop) */
+.mobile-header-bar {
+  display: none !important;
+}
+
+/* Mobile slide-in menu wrapper: hidden by default (desktop) */
+.mobile-menu-wrapper {
+  display: none !important;
+}
+
+/* Floating decorative dots: hidden by default, shown on desktop */
+.floating-dot {
+  display: none !important;
+}
+
+/* ── DESKTOP (≥768px) — floating dots visible ── */
+@media (min-width: 768px) {
+  .floating-dot {
+    display: block !important;
+  }
+}
+
+/* ── MOBILE (<768px) — flip visibility ── */
+@media (max-width: 767px) {
+  /* Show hamburger + logo bar */
+  .mobile-header-bar {
+    display: flex !important;
+  }
+
+  /* Show the mobile menu wrapper (inner slide animation handles open/close) */
+  .mobile-menu-wrapper {
+    display: block !important;
+  }
+
+  /* Hide the desktop horizontal nav */
+  .desktop-nav-wrapper {
+    display: none !important;
+  }
+
+  /* Keep decorative dots hidden on mobile */
+  .floating-dot {
+    display: none !important;
+  }
+
+  /* Push hero content below the fixed 54px mobile header */
+  .hero-content-inner {
+    padding-top: 80px !important;
+  }
+}
+
+/* ── Responsive polish ───────────────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .btn-primary { padding: 11px 24px; font-size: 0.875rem; }
+  .btn-primary { padding: 11px 22px; font-size: 0.875rem; }
   .input-with-icon,
-  .scissor-input { padding: 12px 14px 12px 42px; font-size: 0.85rem; }
-  .input-with-icon { padding-left: 42px; }
+  .scissor-input { font-size: 0.85rem; }
+  .accordion-question { padding: 14px 16px; }
+  .accordion-answer   { padding: 0 16px 14px; padding-top: 12px; }
+  .pricing-card       { padding: 24px 18px; }
+  .feature-card       { padding: 22px 16px; }
 }

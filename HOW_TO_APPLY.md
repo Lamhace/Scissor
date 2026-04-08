@@ -1,17 +1,27 @@
-# Scissor — Patch v3 (All 6 Fixes)
+# Scissor — Patch v5 (Hamburger Desktop Fix)
 
-Drop each file into the matching path in your scissor_redesign project.
+Replace these 3 files in your project. Run `npm start` — no reinstall needed.
 
-| File | Fix |
-|------|-----|
-| src/index.css | New `input-with-icon` class — 44px left-padding guarantees placeholder never overlaps icon |
-| src/components/pages/loginpage/Loginpage.tsx | Icon+placeholder fully fixed with inline SVG icons & inline styles |
-| src/components/pages/signuppage/Signuppage.tsx | Same fix + replace-navigate on signup |
-| src/components/hero/Hero.tsx | Logo top-left + Logout button top-right when logged in (mobile & desktop) |
-| src/components/NavBar/NavBar.tsx | Logout only via button; back/swipe cannot trigger logout |
-| src/components/subscription/Subscription.tsx | Flat array rendering — no nested .map() = no ghost button |
-| src/components/faq/Accordion.tsx | Question div is ALWAYS in DOM; answer conditionally appended below; no AOS on items |
-| src/components/pages/homepage/Homepage.tsx | Mobile header with logo + logout; responsive grids throughout |
-| src/components/trim/Trim.tsx | Icon input fix + fully responsive grid layout |
+## Files
+- `src/index.css`
+- `src/components/NavBar/NavBar.tsx`
+- `src/components/hero/Hero.tsx`
 
-Run `npm start` after replacing. No reinstall needed.
+## What was wrong & what was fixed
+
+### Root cause
+The `mobile-header-bar` div in Hero.tsx had `display: "flex"` in its **inline style**.
+Inline styles have specificity of 1000 — they beat every CSS class rule, including `!important`.
+So `.mobile-header-bar { display: none !important }` in the CSS was completely ignored.
+
+### Fix 1 — Remove `display` from inline styles on controlled elements
+`mobile-header-bar` and `desktop-nav-wrapper` no longer have a `display` property
+in their inline styles. The CSS class is now the sole authority on whether they show.
+
+### Fix 2 — CSS rules placed after `@tailwind utilities`
+All custom rules are now written after the `@tailwind utilities` line so they have
+the highest cascade position and cannot be overridden by Tailwind's generated styles.
+
+### Fix 3 — Mobile slide-in menu uses `transform` not `display`
+The mobile overlay uses `translateX(0) / translateX(100%)` to open/close.
+This means the wrapper `display: block` stays constant — only the position changes.
