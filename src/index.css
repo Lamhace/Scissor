@@ -243,81 +243,14 @@ select.scissor-input option, select.input-with-icon option { background: #1a1a2e
 .animate-float      { animation: float 6s ease-in-out infinite; }
 .animate-pulse-slow { animation: pulse 4s ease-in-out infinite; }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   RESPONSIVE VISIBILITY — Hamburger / Desktop Nav separation
-   ─────────────────────────────────────────────────────────────────────────
-   Rules here must override anything above. They are intentionally placed
-   at the end of the file so they have the highest cascade position.
 
-   KEY PRINCIPLE: The elements that toggle visibility must NOT have a
-   `display` property in their inline style. The CSS class is the sole
-   authority on display. This file sets the defaults and the overrides.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* ── DEFAULTS (applied at all widths, then overridden per breakpoint) ── */
-
-/* Desktop nav: visible by default (≥768px) */
-.desktop-nav-wrapper {
-  display: block !important;
-}
-
-/* Mobile header bar (logo + hamburger): hidden by default (desktop) */
-.mobile-header-bar {
-  display: none !important;
-}
-
-/* Mobile slide-in menu wrapper: hidden by default (desktop) */
-.mobile-menu-wrapper {
-  display: none !important;
-}
-
-/* Floating decorative dots: hidden by default, shown on desktop */
-.floating-dot {
-  display: none !important;
-}
-
-/* ── DESKTOP (≥768px) — floating dots visible ── */
-@media (min-width: 768px) {
-  .floating-dot {
-    display: block !important;
-  }
-}
-
-/* ── MOBILE (<768px) — flip visibility ── */
-@media (max-width: 767px) {
-  /* Show hamburger + logo bar */
-  .mobile-header-bar {
-    display: flex !important;
-  }
-
-  /* Show the mobile menu wrapper (inner slide animation handles open/close) */
-  .mobile-menu-wrapper {
-    display: block !important;
-  }
-
-  /* Hide the desktop horizontal nav */
-  .desktop-nav-wrapper {
-    display: none !important;
-  }
-
-  /* Keep decorative dots hidden on mobile */
-  .floating-dot {
-    display: none !important;
-  }
-
-  /* Push hero content below the fixed 54px mobile header */
-  .hero-content-inner {
-    padding-top: 80px !important;
-  }
-}
-
-/* ── Responsive polish ───────────────────────────────────────────────────── */
+/* ── Responsive polish (layout only, no show/hide — that’s handled by JS) ── */
 @media (max-width: 480px) {
   .btn-primary { padding: 11px 22px; font-size: 0.875rem; }
   .input-with-icon,
   .scissor-input { font-size: 0.85rem; }
   .accordion-question { padding: 14px 16px; }
-  .accordion-answer   { padding: 0 16px 14px; padding-top: 12px; }
-  .pricing-card       { padding: 24px 18px; }
-  .feature-card       { padding: 22px 16px; }
+  .accordion-answer { padding: 0 16px 14px; padding-top: 12px; }
+  .pricing-card { padding: 24px 18px; }
+  .feature-card { padding: 22px 16px; }
 }

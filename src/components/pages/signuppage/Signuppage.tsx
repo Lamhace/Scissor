@@ -114,7 +114,7 @@ export default function Signuppage() {
                 <div style={fieldWrap}>
                   <UserSVG />
                   <input className="input-with-icon" type="text" name="username"
-                    value={data.username} onChange={onChange} placeholder="johndoe" required/>
+                    value={data.username} onChange={onChange} placeholder="Username" required/>
                 </div>
               </div>
 
