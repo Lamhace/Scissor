@@ -5,7 +5,7 @@ const AuthRoute = ({ children }: any) => {
   const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
 
   if (!isLoggedIn) {
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

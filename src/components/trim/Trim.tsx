@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { GiBoxCutter } from "react-icons/gi";
@@ -14,6 +14,18 @@ export default function Trim() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const errorTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Fix #3: auto-clear error after 8 seconds
+  useEffect(() => {
+    if (error) {
+      if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
+      errorTimerRef.current = setTimeout(() => setError(""), 8000);
+    }
+    return () => {
+      if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
+    };
+  }, [error]);
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLongUrl(event.target.value);
@@ -84,9 +96,8 @@ export default function Trim() {
     <section
       id="trim"
       className="relative py-24 px-4 overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%)' }}
+      style={{ background: "linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%)" }}
     >
-      {/* Background effects */}
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-secondary opacity-10 rounded-full blur-3xl pointer-events-none" />
 
@@ -105,13 +116,14 @@ export default function Trim() {
 
         {/* Main trim card */}
         <div className="glass-dark rounded-3xl p-8 border border-secondary border-opacity-20">
-          {/* URL Input */}
+          {/* URL Input — Fix #2: enough left-padding so placeholder clears icon */}
           <div className="mb-4">
             <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Paste Your URL</label>
-            <div className="relative">
-              <FiLink className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted text-lg" />
+            <div className="relative flex items-center">
+              <FiLink className="absolute left-4 text-muted text-lg pointer-events-none z-10" />
               <input
-                className="scissor-input pl-11"
+                className="scissor-input"
+                style={{ paddingLeft: "2.75rem" }}
                 type="text"
                 value={longUrl}
                 onChange={handleUrlChange}
@@ -124,13 +136,13 @@ export default function Trim() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             <div>
               <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Domain</label>
-              <div className="relative">
+              <div className="relative flex items-center">
                 <select className="scissor-input appearance-none pr-10">
                   <option value="1">Choose Domain</option>
                   <option value="2">scissor.com</option>
                   <option value="3">+ Add Domain</option>
                 </select>
-                <FiChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted pointer-events-none" />
+                <FiChevronDown className="absolute right-4 text-muted pointer-events-none" />
               </div>
             </div>
             <div>
@@ -169,9 +181,9 @@ export default function Trim() {
           </p>
         </div>
 
-        {/* Error state */}
+        {/* Fix #3: Error with fade-out animation, auto-disappears after 8s */}
         {error && (
-          <div className="mt-4 p-4 rounded-xl border border-accent border-opacity-30 bg-accent bg-opacity-10 text-accent text-sm text-center">
+          <div className="mt-4 p-4 rounded-xl border border-accent border-opacity-30 bg-accent bg-opacity-10 text-accent text-sm text-center transition-opacity duration-500">
             {error}
           </div>
         )}

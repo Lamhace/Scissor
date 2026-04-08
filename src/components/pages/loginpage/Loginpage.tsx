@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FiScissors, FiMail, FiLock, FiArrowRight } from "react-icons/fi";
 
 export default function Loginpage() {
-  const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
+  const { _isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

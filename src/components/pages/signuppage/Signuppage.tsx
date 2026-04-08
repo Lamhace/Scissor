@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebaseConfig';
 import { logIn } from "../../../Redux/LoginReducer";
 import { useDispatch } from "react-redux";
-import { FiScissors, FiUser, FiMail, FiLock, FiArrowRight } from 'react-icons/fi';
+import { FiScissors, FiArrowRight } from 'react-icons/fi';
 
 export default function Signuppage() {
   const navigate = useNavigate();
@@ -46,6 +46,7 @@ export default function Signuppage() {
     try {
       await createUserWithEmailAndPassword(auth, signUpData.email, signUpData.password);
       dispatch(logIn());
+      // Fix #6: replace so back swipe doesn't return to signup after account creation
       navigate("/", { replace: true });
     } catch (error) {
       setErrorMessage('This email is already registered. Try signing in instead.');
@@ -54,9 +55,25 @@ export default function Signuppage() {
     }
   }
 
+  // Reusable icon SVGs as inline so we avoid Tailwind class conflicts with react-icons sizing
+  const UserIcon = () => (
+    <svg className="absolute left-4 text-muted pointer-events-none z-10" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </svg>
+  );
+  const MailIcon = () => (
+    <svg className="absolute left-4 text-muted pointer-events-none z-10" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+    </svg>
+  );
+  const LockIcon = () => (
+    <svg className="absolute left-4 text-muted pointer-events-none z-10" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+  );
+
   return (
     <div className="min-h-screen bg-primary grid-bg flex flex-col">
-      {/* Background orbs */}
       <div className="fixed top-0 right-0 w-96 h-96 bg-secondary opacity-10 rounded-full blur-3xl pointer-events-none" />
       <div className="fixed bottom-0 left-0 w-80 h-80 bg-neon opacity-5 rounded-full blur-3xl pointer-events-none" />
 
@@ -69,11 +86,10 @@ export default function Signuppage() {
           <span className="font-display font-bold text-lg text-white">scissor</span>
         </Link>
         <Link to="/login" className="text-muted text-sm hover:text-white transition-colors">
-          Already have an account? <span className="text-secondary">Sign in</span>
+          Have an account? <span className="text-secondary font-medium">Sign in</span>
         </Link>
       </div>
 
-      {/* Main */}
       <div className="relative z-10 flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="glass-dark rounded-3xl p-8 border border-white border-opacity-5">
@@ -85,13 +101,14 @@ export default function Signuppage() {
             <GoogleApple />
 
             <form onSubmit={submitSignInData} className="space-y-4">
-              {/* Username */}
+              {/* Username — Fix #7: paddingLeft clears icon */}
               <div>
                 <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Username</label>
-                <div className="relative">
-                  <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+                <div className="relative flex items-center">
+                  <UserIcon />
                   <input
-                    className="scissor-input pl-11"
+                    className="scissor-input"
+                    style={{ paddingLeft: "2.75rem" }}
                     type="text"
                     placeholder="johndoe"
                     value={signUpData.username}
@@ -105,10 +122,11 @@ export default function Signuppage() {
               {/* Email */}
               <div>
                 <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Email</label>
-                <div className="relative">
-                  <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+                <div className="relative flex items-center">
+                  <MailIcon />
                   <input
-                    className="scissor-input pl-11"
+                    className="scissor-input"
+                    style={{ paddingLeft: "2.75rem" }}
                     type="email"
                     placeholder="you@example.com"
                     value={signUpData.email}
@@ -122,10 +140,11 @@ export default function Signuppage() {
               {/* Password */}
               <div>
                 <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Password</label>
-                <div className="relative">
-                  <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+                <div className="relative flex items-center">
+                  <LockIcon />
                   <input
-                    className="scissor-input pl-11 pr-12"
+                    className="scissor-input"
+                    style={{ paddingLeft: "2.75rem", paddingRight: "3rem" }}
                     type={showPassword ? "text" : "password"}
                     placeholder="Min 6 chars, upper, lower, number"
                     value={signUpData.password}
@@ -134,7 +153,7 @@ export default function Signuppage() {
                     autoComplete="new-password"
                     required
                   />
-                  <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-muted hover:text-white transition-colors" onClick={() => setShowPassword(!showPassword)}>
+                  <button type="button" className="absolute right-4 text-muted hover:text-white transition-colors z-10" onClick={() => setShowPassword(!showPassword)}>
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
                 </div>
@@ -143,10 +162,11 @@ export default function Signuppage() {
               {/* Confirm Password */}
               <div>
                 <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Confirm Password</label>
-                <div className="relative">
-                  <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+                <div className="relative flex items-center">
+                  <LockIcon />
                   <input
-                    className="scissor-input pl-11 pr-12"
+                    className="scissor-input"
+                    style={{ paddingLeft: "2.75rem", paddingRight: "3rem" }}
                     type={showPassword ? "text" : "password"}
                     placeholder="Repeat your password"
                     value={signUpData.confirmPassword}
@@ -155,15 +175,16 @@ export default function Signuppage() {
                     autoComplete="new-password"
                     required
                   />
+                  <button type="button" className="absolute right-4 text-muted hover:text-white transition-colors z-10" onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
                 </div>
               </div>
 
-              {/* Hint */}
               <p className="text-muted text-xs">
                 Use 6+ characters with at least one uppercase, one lowercase, and one number.
               </p>
 
-              {/* Errors */}
               {errorMessage && (
                 <div className="p-3 rounded-xl bg-accent bg-opacity-10 border border-accent border-opacity-30 text-accent text-sm text-center">
                   {errorMessage}
@@ -175,7 +196,6 @@ export default function Signuppage() {
                 </div>
               )}
 
-              {/* Submit */}
               <button
                 type="submit"
                 disabled={loading}
@@ -184,10 +204,7 @@ export default function Signuppage() {
                 {loading ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
-                  <>
-                    Create Account
-                    <FiArrowRight />
-                  </>
+                  <>Create Account <FiArrowRight /></>
                 )}
               </button>
             </form>

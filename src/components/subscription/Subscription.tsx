@@ -4,8 +4,6 @@ import { FiZap } from "react-icons/fi";
 import BasicPlan from "./Basic";
 import ProfessionalPlan from "./Proffesional";
 import TeamsPlan from "./Teams";
-import Aos from "aos";
-import "aos/dist/aos.css";
 
 const planConfig = [
   { borderColor: "border-white border-opacity-10", isFeatured: false, badge: null },

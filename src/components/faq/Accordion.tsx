@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import FaqData from "./FaqData";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { FiHelpCircle } from "react-icons/fi";
 
 export default function Accordion() {
-  const [openedIndex, setOpenedIndex] = React.useState<number>(-1);
+  // Fix #4: track which index is open; -1 = none open
+  const [openedIndex, setOpenedIndex] = useState<number>(-1);
 
   const toggleAccordion = (index: number) => {
     setOpenedIndex(openedIndex === index ? -1 : index);
@@ -25,39 +26,47 @@ export default function Accordion() {
         </div>
 
         <div className="space-y-3">
-          {FaqData.map((item, index) => (
-            <div
-              key={index}
-              className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                openedIndex === index
-                  ? "border-secondary border-opacity-40 bg-secondary bg-opacity-5"
-                  : "border-white border-opacity-5 glass hover:border-opacity-10"
-              }`}
-              data-aos="fade-up"
-              data-aos-delay={index * 30}
-            >
-              <button
-                className="w-full flex items-center justify-between px-6 py-5 text-left"
-                onClick={() => toggleAccordion(index)}
+          {FaqData.map((item, index) => {
+            const isOpen = openedIndex === index;
+            return (
+              <div
+                key={index}
+                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                  isOpen
+                    ? "border-secondary border-opacity-40 bg-secondary bg-opacity-5"
+                    : "border-white border-opacity-5 glass hover:border-opacity-10"
+                }`}
+                data-aos="fade-up"
+                data-aos-delay={index * 30}
               >
-                <span className={`font-display font-medium text-sm md:text-base pr-8 ${openedIndex === index ? "text-white" : "text-white text-opacity-80"}`}>
-                  {item.question}
-                </span>
-                <span className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
-                  openedIndex === index ? "bg-secondary text-white" : "bg-white bg-opacity-5 text-muted"
-                }`}>
-                  {openedIndex === index ? <AiOutlineMinus className="text-sm" /> : <AiOutlinePlus className="text-sm" />}
-                </span>
-              </button>
-              {openedIndex === index && (
-                <div className="px-6 pb-5">
-                  <div className="text-muted text-sm leading-relaxed border-t border-white border-opacity-5 pt-4">
-                    {item.answer}
+                {/* Question row — always visible */}
+                <button
+                  className="w-full flex items-center justify-between px-6 py-5 text-left"
+                  onClick={() => toggleAccordion(index)}
+                >
+                  <span className={`font-display font-medium text-sm md:text-base pr-8 ${isOpen ? "text-white" : "text-white text-opacity-80"}`}>
+                    {item.question}
+                  </span>
+                  <span
+                    className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
+                      isOpen ? "bg-secondary text-white" : "bg-white bg-opacity-5 text-muted"
+                    }`}
+                  >
+                    {isOpen ? <AiOutlineMinus className="text-sm" /> : <AiOutlinePlus className="text-sm" />}
+                  </span>
+                </button>
+
+                {/* Answer — only rendered when open, so question stays visible */}
+                {isOpen && (
+                  <div className="px-6 pb-5">
+                    <div className="text-muted text-sm leading-relaxed border-t border-white border-opacity-5 pt-4">
+                      {item.answer}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
