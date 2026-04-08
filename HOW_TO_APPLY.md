@@ -1,19 +1,17 @@
-# Scissor — Patch Update
+# Scissor — Patch v3 (All 6 Fixes)
 
-## Files Changed
-Replace these files in your project with the ones in this zip (same folder paths):
+Drop each file into the matching path in your scissor_redesign project.
 
-| File | Fix Applied |
-|------|-------------|
-| `src/components/subscription/Subscription.tsx` | Fixed Professional card duplicate button at top |
-| `src/components/trim/Trim.tsx` | Fixed URL input icon/placeholder overlap + error auto-hides after 8s |
-| `src/components/faq/Accordion.tsx` | Fixed accordion — question stays visible, answer toggles below |
-| `src/components/NavBar/NavBar.tsx` | Added nav links, logout button when logged in, logo always visible |
-| `src/components/pages/loginpage/Loginpage.tsx` | Fixed icon/placeholder overlap + back button won't return to login |
-| `src/components/pages/signuppage/Signuppage.tsx` | Fixed icon/placeholder overlap + back button won't return to signup |
-| `src/components/AuthRoute.tsx` | Uses replace navigation to prevent back-button auth bypass |
+| File | Fix |
+|------|-----|
+| src/index.css | New `input-with-icon` class — 44px left-padding guarantees placeholder never overlaps icon |
+| src/components/pages/loginpage/Loginpage.tsx | Icon+placeholder fully fixed with inline SVG icons & inline styles |
+| src/components/pages/signuppage/Signuppage.tsx | Same fix + replace-navigate on signup |
+| src/components/hero/Hero.tsx | Logo top-left + Logout button top-right when logged in (mobile & desktop) |
+| src/components/NavBar/NavBar.tsx | Logout only via button; back/swipe cannot trigger logout |
+| src/components/subscription/Subscription.tsx | Flat array rendering — no nested .map() = no ghost button |
+| src/components/faq/Accordion.tsx | Question div is ALWAYS in DOM; answer conditionally appended below; no AOS on items |
+| src/components/pages/homepage/Homepage.tsx | Mobile header with logo + logout; responsive grids throughout |
+| src/components/trim/Trim.tsx | Icon input fix + fully responsive grid layout |
 
-## How to Apply
-1. Extract this zip
-2. Copy each file into the matching path in your `scissor_redesign` project folder
-3. Run `npm start` — no reinstall needed
+Run `npm start` after replacing. No reinstall needed.

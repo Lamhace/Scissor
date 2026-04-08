@@ -7,218 +7,209 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FiLink, FiCopy, FiCheck, FiChevronDown } from "react-icons/fi";
 
 export default function Trim() {
-  const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
-  const [longUrl, setLongUrl] = useState("");
+  const { isLoggedIn } = useSelector((s: any) => s.loginAuthenticator);
+  const [longUrl,  setLongUrl]  = useState("");
   const [shortUrl, setShortUrl] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const errorTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [copied,   setCopied]   = useState(false);
+  const [error,    setError]    = useState("");
+  const [loading,  setLoading]  = useState(false);
+  const navigate    = useNavigate();
+  const errorTimer  = useRef<NodeJS.Timeout | null>(null);
 
-  // Fix #3: auto-clear error after 8 seconds
+  // auto-clear error after 8 s
   useEffect(() => {
-    if (error) {
-      if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
-      errorTimerRef.current = setTimeout(() => setError(""), 8000);
-    }
-    return () => {
-      if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
-    };
+    if (!error) return;
+    if (errorTimer.current) clearTimeout(errorTimer.current);
+    errorTimer.current = setTimeout(() => setError(""), 8000);
+    return () => { if (errorTimer.current) clearTimeout(errorTimer.current); };
   }, [error]);
 
-  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLongUrl(event.target.value);
-    setError("");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLongUrl(e.target.value); setError("");
   };
 
-  const validateUrl = (url: string) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  };
+  const isValidUrl = (url: string) => { try { new URL(url); return true; } catch { return false; } };
 
   const shortenUrl = async (url: string) => {
-    const token = "ef34b9d1902be678f3877b8471f60e0cca477adb";
-    const apiUrl = "https://api-ssl.bitly.com/v4/shorten";
-    const response = await axios.post(
-      apiUrl,
+    const res = await axios.post(
+      "https://api-ssl.bitly.com/v4/shorten",
       { long_url: url },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
+      { headers: { Authorization: "Bearer ef34b9d1902be678f3877b8471f60e0cca477adb",
+          "Content-Type": "application/json" } }
     );
-    return response.data.link;
+    return res.data.link;
   };
 
-  const handleShortenUrl = async () => {
+  const handleTrim = async () => {
     if (!longUrl) return;
-    if (!validateUrl(longUrl)) {
-      setError("Invalid URL format. Please enter a valid URL including https://");
-      return;
-    }
-    if (isLoggedIn) {
-      setLoading(true);
-      try {
-        const result = await shortenUrl(longUrl);
-        setShortUrl(result);
-        setCopied(false);
-        setError("");
-      } catch (error) {
-        setError("Failed to shorten URL. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      navigate("/login");
-    }
-    setLongUrl("");
+    if (!isValidUrl(longUrl)) { setError("Invalid URL. Include https:// and try again."); return; }
+    if (!isLoggedIn) { navigate("/login"); return; }
+    setLoading(true);
+    try {
+      const result = await shortenUrl(longUrl);
+      setShortUrl(result); setCopied(false); setError("");
+    } catch { setError("Failed to shorten URL. Please try again."); }
+    finally { setLoading(false); setLongUrl(""); }
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(shortUrl);
-    setCopied(true);
+    navigator.clipboard.writeText(shortUrl); setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const clearShortUrl = () => {
-    setShortUrl("");
-    setCopied(false);
+  const iconSt: React.CSSProperties = {
+    position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",
+    color:"#a0aec0",pointerEvents:"none",zIndex:10
   };
 
   return (
-    <section
-      id="trim"
-      className="relative py-24 px-4 overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%)" }}
-    >
-      <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-secondary opacity-10 rounded-full blur-3xl pointer-events-none" />
+    <section id="trim" style={{
+      padding:"80px 16px",position:"relative",overflow:"hidden",
+      background:"linear-gradient(180deg,#0a0a0f 0%,#1a1a2e 50%,#0a0a0f 100%)"
+    }}>
+      <div style={{position:"absolute",inset:0,pointerEvents:"none"}} className="grid-bg"/>
+      <div style={{position:"absolute",top:"50%",left:"50%",
+        transform:"translate(-50%,-50%)",width:480,height:480,
+        background:"#6c63ff",opacity:.08,borderRadius:"50%",filter:"blur(90px)",pointerEvents:"none"}}/>
 
-      <div className="relative z-10 max-w-2xl mx-auto">
-        {/* Section header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-4 border border-secondary border-opacity-20">
-            <GiBoxCutter className="text-secondary" />
-            <span className="text-xs font-mono text-secondary tracking-widest uppercase">URL Trimmer</span>
+      <div style={{maxWidth:640,margin:"0 auto",position:"relative",zIndex:1}}>
+
+        {/* heading */}
+        <div style={{textAlign:"center",marginBottom:40}}>
+          <div style={{display:"inline-flex",alignItems:"center",gap:8,
+            background:"rgba(255,255,255,0.04)",border:"1px solid rgba(108,99,255,0.2)",
+            borderRadius:999,padding:"6px 16px",marginBottom:14}}>
+            <GiBoxCutter style={{color:"#6c63ff"}}/>
+            <span style={{fontSize:11,fontFamily:"JetBrains Mono,monospace",color:"#6c63ff",
+              textTransform:"uppercase",letterSpacing:"0.12em"}}>URL Trimmer</span>
           </div>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-3">
-            Trim Your <span className="gradient-text">Long URLs</span>
+          <h2 style={{fontFamily:"Space Grotesk,sans-serif",fontWeight:700,
+            fontSize:"clamp(1.6rem,4vw,2.2rem)",color:"#fff",margin:"0 0 10px"}}>
+            Trim Your{" "}
+            <span style={{background:"linear-gradient(135deg,#6c63ff,#00f5ff)",
+              WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>
+              Long URLs
+            </span>
           </h2>
-          <p className="text-muted text-sm">Paste your link, choose a domain, set a custom alias and trim.</p>
+          <p style={{color:"#a0aec0",fontSize:14,margin:0}}>Paste your link, choose a domain and trim.</p>
         </div>
 
-        {/* Main trim card */}
-        <div className="glass-dark rounded-3xl p-8 border border-secondary border-opacity-20">
-          {/* URL Input — Fix #2: enough left-padding so placeholder clears icon */}
-          <div className="mb-4">
-            <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Paste Your URL</label>
-            <div className="relative flex items-center">
-              <FiLink className="absolute left-4 text-muted text-lg pointer-events-none z-10" />
+        {/* card */}
+        <div className="glass-dark" style={{borderRadius:24,padding:"clamp(20px,4vw,36px)"}}>
+
+          {/* URL input */}
+          <div style={{marginBottom:16}}>
+            <label style={{display:"block",fontSize:11,fontFamily:"JetBrains Mono,monospace",
+              color:"#a0aec0",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:8}}>
+              Paste Your URL
+            </label>
+            <div style={{position:"relative",display:"flex",alignItems:"center"}}>
+              <FiLink style={iconSt}/>
               <input
-                className="scissor-input"
-                style={{ paddingLeft: "2.75rem" }}
+                className="input-with-icon"
                 type="text"
                 value={longUrl}
-                onChange={handleUrlChange}
+                onChange={handleChange}
                 placeholder="https://your-very-long-url.com/goes/here..."
               />
             </div>
           </div>
 
-          {/* Domain + Alias Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          {/* domain + alias */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",
+            gap:12,marginBottom:20}}>
             <div>
-              <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Domain</label>
-              <div className="relative flex items-center">
-                <select className="scissor-input appearance-none pr-10">
-                  <option value="1">Choose Domain</option>
-                  <option value="2">scissor.com</option>
-                  <option value="3">+ Add Domain</option>
+              <label style={{display:"block",fontSize:11,fontFamily:"JetBrains Mono,monospace",
+                color:"#a0aec0",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:8}}>
+                Domain
+              </label>
+              <div style={{position:"relative",display:"flex",alignItems:"center"}}>
+                <select className="scissor-input" style={{paddingRight:40}}>
+                  <option>Choose Domain</option>
+                  <option>scissor.com</option>
+                  <option>+ Add Domain</option>
                 </select>
-                <FiChevronDown className="absolute right-4 text-muted pointer-events-none" />
+                <FiChevronDown style={{position:"absolute",right:14,color:"#a0aec0",pointerEvents:"none"}}/>
               </div>
             </div>
             <div>
-              <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Custom Alias</label>
-              <input
-                className="scissor-input"
-                type="text"
-                placeholder="my-custom-link"
-              />
+              <label style={{display:"block",fontSize:11,fontFamily:"JetBrains Mono,monospace",
+                color:"#a0aec0",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:8}}>
+                Custom Alias
+              </label>
+              <input className="scissor-input" type="text" placeholder="my-custom-link"/>
             </div>
           </div>
 
-          {/* Trim Button */}
+          {/* button */}
           <button
-            className="w-full btn-primary flex items-center justify-center gap-3 text-base py-4 rounded-xl"
-            onClick={handleShortenUrl}
+            onClick={handleTrim}
             disabled={loading}
+            className="btn-primary"
+            style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center",
+              gap:10,padding:"14px 24px",borderRadius:14,fontSize:15}}
           >
-            {loading ? (
-              <>
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Trimming...
-              </>
-            ) : (
-              <>
-                <GiBoxCutter className="text-xl" />
-                Trim URL
-              </>
-            )}
+            {loading
+              ? <div style={{width:20,height:20,border:"2px solid rgba(255,255,255,.3)",
+                  borderTopColor:"#fff",borderRadius:"50%",animation:"spin .7s linear infinite"}}/>
+              : <><GiBoxCutter style={{fontSize:18}}/> Trim URL</>
+            }
           </button>
 
-          <p className="text-center text-muted text-xs mt-4 leading-relaxed">
+          <p style={{textAlign:"center",color:"#a0aec0",fontSize:12,marginTop:14,lineHeight:1.6}}>
             By clicking Trim URL, you agree to our{" "}
-            <span className="text-secondary hover:underline cursor-pointer">Terms of Service</span>,{" "}
-            <span className="text-secondary hover:underline cursor-pointer">Privacy Policy</span> and Cookie Usage.
+            <span style={{color:"#6c63ff",cursor:"pointer"}}>Terms of Service</span>,{" "}
+            <span style={{color:"#6c63ff",cursor:"pointer"}}>Privacy Policy</span> and Cookie Usage.
           </p>
         </div>
 
-        {/* Fix #3: Error with fade-out animation, auto-disappears after 8s */}
+        {/* error */}
         {error && (
-          <div className="mt-4 p-4 rounded-xl border border-accent border-opacity-30 bg-accent bg-opacity-10 text-accent text-sm text-center transition-opacity duration-500">
+          <div style={{marginTop:14,padding:"12px 16px",borderRadius:12,
+            background:"rgba(255,107,107,.1)",border:"1px solid rgba(255,107,107,.3)",
+            color:"#ff6b6b",fontSize:13,textAlign:"center"}}>
             {error}
           </div>
         )}
 
-        {/* Result card */}
+        {/* result */}
         {shortUrl && (
-          <div className="mt-6 glass-dark rounded-2xl p-6 border border-secondary border-opacity-30 relative" data-aos="fade-up">
-            <button
-              onClick={clearShortUrl}
-              className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 text-muted hover:text-white transition-all"
-            >
-              <AiOutlineClose className="text-sm" />
+          <div className="glass-dark" style={{marginTop:20,borderRadius:20,padding:"22px",
+            border:"1px solid rgba(108,99,255,0.3)",position:"relative"}}>
+            <button onClick={() => { setShortUrl(""); setCopied(false); }} style={{
+              position:"absolute",top:14,right:14,width:28,height:28,
+              background:"rgba(255,255,255,.08)",border:"none",borderRadius:"50%",
+              color:"#a0aec0",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"
+            }}>
+              <AiOutlineClose style={{fontSize:13}}/>
             </button>
-            <div className="mb-3">
-              <span className="text-xs font-mono text-secondary uppercase tracking-widest">Your Shortened URL</span>
+            <div style={{fontSize:11,fontFamily:"JetBrains Mono,monospace",color:"#6c63ff",
+              textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:12}}>
+              Your Shortened URL
             </div>
-            <div className="flex items-center gap-3">
-              <div className="flex-1 font-mono text-base text-white bg-white bg-opacity-5 rounded-xl px-4 py-3 truncate border border-white border-opacity-5">
+            <div style={{display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
+              <div style={{flex:1,minWidth:160,fontFamily:"JetBrains Mono,monospace",fontSize:14,
+                color:"#fff",background:"rgba(255,255,255,.05)",borderRadius:10,
+                padding:"12px 14px",border:"1px solid rgba(255,255,255,.06)",
+                overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
                 {shortUrl}
               </div>
-              <button
-                onClick={handleCopy}
-                className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                  copied
-                    ? "bg-green-500 bg-opacity-20 text-green-400 border border-green-500 border-opacity-30"
-                    : "bg-secondary bg-opacity-20 text-secondary border border-secondary border-opacity-30 hover:bg-opacity-30"
-                }`}
-              >
-                {copied ? <FiCheck /> : <FiCopy />}
+              <button onClick={handleCopy} style={{
+                display:"flex",alignItems:"center",gap:6,padding:"12px 18px",
+                borderRadius:10,fontFamily:"Space Grotesk,sans-serif",fontWeight:600,fontSize:13,
+                cursor:"pointer",transition:"all .3s",border:"1px solid",
+                background: copied ? "rgba(72,187,120,.15)" : "rgba(108,99,255,.15)",
+                color:       copied ? "#48bb78"              : "#6c63ff",
+                borderColor: copied ? "rgba(72,187,120,.35)"  : "rgba(108,99,255,.35)",
+              }}>
+                {copied ? <FiCheck/> : <FiCopy/>}
                 {copied ? "Copied!" : "Copy"}
               </button>
             </div>
           </div>
         )}
       </div>
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </section>
   );
 }

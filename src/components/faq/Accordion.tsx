@@ -1,67 +1,81 @@
 import React, { useState } from "react";
 import FaqData from "./FaqData";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import { FiHelpCircle } from "react-icons/fi";
+import { FiHelpCircle, FiPlus, FiX } from "react-icons/fi";
 
 export default function Accordion() {
-  // Fix #4: track which index is open; -1 = none open
-  const [openedIndex, setOpenedIndex] = useState<number>(-1);
+  const [openIndex, setOpenIndex] = useState<number>(-1);
 
-  const toggleAccordion = (index: number) => {
-    setOpenedIndex(openedIndex === index ? -1 : index);
-  };
+  const toggle = (i: number) => setOpenIndex(prev => prev === i ? -1 : i);
 
   return (
-    <section className="py-24 px-4 relative" id="faq">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-14" data-aos="fade-up">
-          <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-4 border border-secondary border-opacity-20">
-            <FiHelpCircle className="text-secondary text-sm" />
-            <span className="text-xs font-mono text-secondary tracking-widest uppercase">FAQs</span>
+    <section style={{padding:"80px 16px"}} id="faq">
+      <div style={{maxWidth:760,margin:"0 auto"}}>
+
+        {/* heading */}
+        <div style={{textAlign:"center",marginBottom:48}}>
+          <div style={{display:"inline-flex",alignItems:"center",gap:8,
+            background:"rgba(255,255,255,0.04)",border:"1px solid rgba(108,99,255,0.2)",
+            borderRadius:999,padding:"6px 16px",marginBottom:16}}>
+            <FiHelpCircle style={{color:"#6c63ff",fontSize:14}}/>
+            <span style={{fontSize:11,fontFamily:"JetBrains Mono,monospace",color:"#6c63ff",
+              textTransform:"uppercase",letterSpacing:"0.12em"}}>FAQs</span>
           </div>
-          <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">
-            Frequently Asked <span className="gradient-text">Questions</span>
+          <h2 style={{fontFamily:"Space Grotesk,sans-serif",fontWeight:700,
+            fontSize:"clamp(1.75rem,4vw,2.75rem)",color:"#fff",margin:"0 0 12px"}}>
+            Frequently Asked{" "}
+            <span style={{background:"linear-gradient(135deg,#6c63ff,#00f5ff)",
+              WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"}}>
+              Questions
+            </span>
           </h2>
-          <p className="text-muted">Everything you need to know about Scissor.</p>
+          <p style={{color:"#a0aec0",fontSize:15,margin:0}}>
+            Everything you need to know about Scissor.
+          </p>
         </div>
 
-        <div className="space-y-3">
-          {FaqData.map((item, index) => {
-            const isOpen = openedIndex === index;
+        {/* accordion list */}
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {FaqData.map((item, i) => {
+            const isOpen = openIndex === i;
             return (
+              /*
+               * KEY FIX: the outer div is always rendered and never removed.
+               * We do NOT use data-aos here because AOS re-animates on state change
+               * which was causing the item to flash/disappear when opened.
+               * Question text lives in a <div>, not inside a conditional block.
+               * Only the answer panel is conditionally shown.
+               */
               <div
-                key={index}
-                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                  isOpen
-                    ? "border-secondary border-opacity-40 bg-secondary bg-opacity-5"
-                    : "border-white border-opacity-5 glass hover:border-opacity-10"
-                }`}
-                data-aos="fade-up"
-                data-aos-delay={index * 30}
+                key={i}
+                className="accordion-item"
+                style={isOpen ? {
+                  borderColor:"rgba(108,99,255,0.4)",
+                  background:"rgba(108,99,255,0.04)"
+                } : {}}
               >
-                {/* Question row — always visible */}
+                {/* ── question row – ALWAYS visible ── */}
                 <button
-                  className="w-full flex items-center justify-between px-6 py-5 text-left"
-                  onClick={() => toggleAccordion(index)}
+                  type="button"
+                  className="accordion-question"
+                  onClick={() => toggle(i)}
+                  aria-expanded={isOpen}
                 >
-                  <span className={`font-display font-medium text-sm md:text-base pr-8 ${isOpen ? "text-white" : "text-white text-opacity-80"}`}>
-                    {item.question}
-                  </span>
+                  <span className="accordion-question-text">{item.question}</span>
                   <span
-                    className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
-                      isOpen ? "bg-secondary text-white" : "bg-white bg-opacity-5 text-muted"
-                    }`}
+                    className="accordion-icon"
+                    style={isOpen ? {
+                      background:"#6c63ff",color:"#fff",transform:"rotate(45deg)"
+                    } : {}}
                   >
-                    {isOpen ? <AiOutlineMinus className="text-sm" /> : <AiOutlinePlus className="text-sm" />}
+                    {/* always render FiPlus; rotation via style above creates an × when open */}
+                    <FiPlus style={{fontSize:13}}/>
                   </span>
                 </button>
 
-                {/* Answer — only rendered when open, so question stays visible */}
+                {/* ── answer panel – conditionally rendered BELOW the question ── */}
                 {isOpen && (
-                  <div className="px-6 pb-5">
-                    <div className="text-muted text-sm leading-relaxed border-t border-white border-opacity-5 pt-4">
-                      {item.answer}
-                    </div>
+                  <div className="accordion-answer">
+                    {item.answer}
                   </div>
                 )}
               </div>

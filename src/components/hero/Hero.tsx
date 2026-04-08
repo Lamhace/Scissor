@@ -1,85 +1,186 @@
-import React from 'react';
-import NavBar from '../NavBar/NavBar';
-import { FiScissors, FiArrowRight, FiZap } from 'react-icons/fi';
-import { Link } from 'react-scroll';
+import React from "react";
+import NavBar from "../NavBar/NavBar";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../Redux/LoginReducer";
+import { FiScissors, FiArrowRight, FiZap, FiLogOut } from "react-icons/fi";
+import { Link } from "react-scroll";
 
 export default function Hero() {
+  const { isLoggedIn } = useSelector((state: any) => state.loginAuthenticator);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  function handleLogout() {
+    dispatch(logOut());
+    navigate("/login", { replace: true });
+  }
+
   return (
-    <div className="relative min-h-screen bg-hero-gradient grid-bg overflow-hidden">
-      {/* Animated background orbs */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-secondary opacity-10 rounded-full blur-3xl animate-pulse-slow pointer-events-none" />
-      <div className="absolute bottom-20 right-10 w-80 h-80 bg-neon opacity-5 rounded-full blur-3xl animate-pulse-slow pointer-events-none" style={{ animationDelay: '2s' }} />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary opacity-5 rounded-full blur-3xl pointer-events-none" />
+    <div style={{
+      position:"relative",
+      minHeight:"100vh",
+      background:"linear-gradient(135deg,#0a0a0f 0%,#1a1a2e 40%,#16213e 70%,#0f3460 100%)",
+      overflow:"hidden",
+    }} className="grid-bg">
 
-      {/* Floating decorative elements */}
-      <div className="absolute top-32 right-20 w-3 h-3 bg-secondary rounded-full animate-float opacity-60 hidden lg:block" style={{ animationDelay: '0s' }} />
-      <div className="absolute top-60 right-48 w-2 h-2 bg-neon rounded-full animate-float opacity-40 hidden lg:block" style={{ animationDelay: '1.5s' }} />
-      <div className="absolute bottom-40 left-20 w-4 h-4 bg-accent rounded-full animate-float opacity-30 hidden lg:block" style={{ animationDelay: '3s' }} />
-      <div className="absolute top-48 left-1/3 w-2 h-2 bg-neon rounded-full animate-float opacity-50 hidden lg:block" style={{ animationDelay: '2s' }} />
+      {/* ambient orbs */}
+      <div style={{position:"absolute",top:80,left:40,width:380,height:380,
+        background:"#6c63ff",opacity:.09,borderRadius:"50%",filter:"blur(80px)",pointerEvents:"none"}}/>
+      <div style={{position:"absolute",bottom:80,right:40,width:300,height:300,
+        background:"#00f5ff",opacity:.05,borderRadius:"50%",filter:"blur(80px)",pointerEvents:"none"}}/>
 
-      {/* NAVBAR */}
+      {/* floating dots */}
+      {[
+        {top:130,right:80,size:12,color:"#6c63ff",delay:0},
+        {top:240,right:190,size:8,color:"#00f5ff",delay:1.5},
+        {bottom:160,left:80,size:16,color:"#ff6b6b",delay:3},
+        {top:200,left:"33%",size:8,color:"#00f5ff",delay:2},
+      ].map((d,i) => (
+        <div key={i} className="animate-float" style={{
+          position:"absolute",...(d.top!==undefined?{top:d.top}:{}),
+          ...(d.bottom!==undefined?{bottom:d.bottom}:{}),
+          ...(d.right!==undefined?{right:d.right}:{}),
+          ...(d.left!==undefined?{left:d.left}:{}),
+          width:d.size,height:d.size,background:d.color,
+          borderRadius:"50%",opacity:.5,
+          animationDelay:`${d.delay}s`,pointerEvents:"none"
+        }}/>
+      ))}
+
+      {/* ── top bar: logo left + logout right (when logged in) ─────────── */}
+      <div style={{
+        position:"absolute",top:0,left:0,right:0,zIndex:40,
+        display:"flex",alignItems:"center",justifyContent:"space-between",
+        padding:"16px 24px",
+        /* only show on mobile; desktop uses NavBar */
+      }} className="md:hidden">
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <div style={{width:32,height:32,borderRadius:8,background:"rgba(108,99,255,.15)",
+            border:"1px solid rgba(108,99,255,.35)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <FiScissors style={{color:"#6c63ff",fontSize:14}}/>
+          </div>
+          <span style={{fontFamily:"Space Grotesk,sans-serif",fontWeight:700,fontSize:17,color:"#fff"}}>
+            scissor
+          </span>
+        </div>
+        {isLoggedIn && (
+          <button onClick={handleLogout} style={{
+            display:"flex",alignItems:"center",gap:6,
+            background:"rgba(255,107,107,.12)",border:"1px solid rgba(255,107,107,.3)",
+            color:"#ff6b6b",padding:"7px 14px",borderRadius:999,fontSize:13,
+            fontFamily:"Space Grotesk,sans-serif",fontWeight:600,cursor:"pointer"
+          }}>
+            <FiLogOut style={{fontSize:14}}/>
+            Log Out
+          </button>
+        )}
+      </div>
+
+      {/* ── desktop NavBar (already has logo + logout) ───────────────────── */}
       <NavBar />
 
-      {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-4 xs:pt-32 md:pt-20 pb-16 text-center">
-        
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 border border-secondary border-opacity-30">
-          <FiZap className="text-secondary text-sm" />
-          <span className="text-xs font-mono text-muted tracking-widest uppercase">Lightning Fast URL Shortening</span>
+      {/* ── hero content ─────────────────────────────────────────────────── */}
+      <div style={{
+        position:"relative",zIndex:10,
+        display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
+        padding:"clamp(100px,14vw,160px) 16px 80px",
+        textAlign:"center",
+      }}>
+
+        {/* badge */}
+        <div className="glass" style={{
+          display:"inline-flex",alignItems:"center",gap:8,
+          borderRadius:999,padding:"6px 16px",marginBottom:28,
+          border:"1px solid rgba(108,99,255,0.3)"
+        }}>
+          <FiZap style={{color:"#6c63ff",fontSize:13}}/>
+          <span style={{fontSize:11,fontFamily:"JetBrains Mono,monospace",
+            color:"#a0aec0",textTransform:"uppercase",letterSpacing:"0.12em"}}>
+            Lightning Fast URL Shortening
+          </span>
         </div>
 
-        {/* Headline */}
-        <h1 className="font-display font-bold leading-tight mb-6 max-w-4xl">
-          <span className="block text-white xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-            Shorten. Share.
-          </span>
-          <span className="block gradient-text xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mt-1">
+        {/* headline */}
+        <h1 style={{
+          fontFamily:"Space Grotesk,sans-serif",fontWeight:700,lineHeight:1.1,
+          marginBottom:20,maxWidth:840,
+          fontSize:"clamp(2rem,7vw,4.5rem)",
+          color:"#fff"
+        }}>
+          Shorten. Share.{" "}
+          <span style={{
+            background:"linear-gradient(135deg,#6c63ff,#00f5ff)",
+            WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"
+          }}>
             Track Everything.
           </span>
         </h1>
 
-        {/* Sub headline */}
-        <p className="text-muted xs:text-sm sm:text-base lg:text-lg max-w-2xl mb-10 leading-relaxed font-body">
-          Scissor transforms your long, unwieldy URLs into sharp, branded links — 
-          complete with QR codes, custom slugs, and powerful analytics.
+        {/* sub */}
+        <p style={{
+          color:"#a0aec0",maxWidth:600,marginBottom:36,lineHeight:1.7,
+          fontSize:"clamp(0.875rem,2vw,1.1rem)"
+        }}>
+          Scissor transforms long, unwieldy URLs into sharp branded links — complete with
+          QR codes, custom slugs, and powerful analytics.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex xs:flex-col sm:flex-row items-center gap-4 mb-16">
-          <Link to="trim" smooth={true} duration={800}>
-            <button className="btn-primary flex items-center gap-2 text-base px-8 py-4">
-              <FiScissors className="text-lg" />
-              Trim Your First URL
-              <FiArrowRight className="text-lg" />
+        {/* CTAs */}
+        <div style={{display:"flex",flexWrap:"wrap",gap:14,justifyContent:"center",marginBottom:56}}>
+          <Link to="trim" smooth duration={800}>
+            <button className="btn-primary" style={{
+              display:"flex",alignItems:"center",gap:8,
+              padding:"14px 28px",fontSize:"clamp(0.85rem,2vw,1rem)"
+            }}>
+              <FiScissors/>Trim Your First URL<FiArrowRight/>
             </button>
           </Link>
-          <Link to="analytics" smooth={true} duration={800}>
-            <button className="glass border border-white border-opacity-10 text-white text-base px-8 py-4 rounded-full font-semibold hover:border-secondary hover:border-opacity-40 transition-all duration-300 font-display">
+          <Link to="analytics" smooth duration={800}>
+            <button className="glass" style={{
+              display:"flex",alignItems:"center",
+              border:"1px solid rgba(255,255,255,0.12)",color:"#fff",
+              padding:"14px 28px",borderRadius:999,
+              fontFamily:"Space Grotesk,sans-serif",fontWeight:600,
+              fontSize:"clamp(0.85rem,2vw,1rem)",cursor:"pointer",
+              transition:"border-color .3s",background:"rgba(255,255,255,0.04)"
+            }}>
               See How It Works
             </button>
           </Link>
         </div>
 
-        {/* Stats bar */}
-        <div className="glass rounded-2xl px-8 py-5 flex xs:flex-col sm:flex-row items-center xs:gap-5 sm:gap-12 max-w-2xl">
+        {/* stats bar */}
+        <div className="glass" style={{
+          borderRadius:20,padding:"18px 28px",
+          display:"flex",flexWrap:"wrap",gap:16,
+          justifyContent:"center",alignItems:"center",maxWidth:640,
+          border:"1px solid rgba(255,255,255,0.08)"
+        }}>
           {[
-            { number: '3M+', label: 'Active Users' },
-            { number: '60M+', label: 'Links Created' },
-            { number: '1B+', label: 'Connections' },
-            { number: '300K+', label: 'Integrations' },
-          ].map((stat, i) => (
-            <div key={i} className="text-center sm:border-r sm:border-white sm:border-opacity-10 sm:last:border-0 sm:pr-12 sm:last:pr-0">
-              <div className="stat-number text-2xl font-bold">{stat.number}</div>
-              <div className="text-muted text-xs mt-0.5 font-body">{stat.label}</div>
+            {n:"3M+",l:"Active Users"},
+            {n:"60M+",l:"Links Created"},
+            {n:"1B+",l:"Connections"},
+            {n:"300K+",l:"Integrations"},
+          ].map((s,i) => (
+            <div key={i} style={{textAlign:"center",padding:"0 16px",
+              borderRight: i < 3 ? "1px solid rgba(255,255,255,0.1)" : "none"}}>
+              <div className="stat-number" style={{fontSize:"clamp(1.25rem,3vw,1.6rem)",fontWeight:700}}>{s.n}</div>
+              <div style={{color:"#a0aec0",fontSize:12,marginTop:2}}>{s.l}</div>
             </div>
           ))}
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-          <span className="text-xs text-muted font-mono tracking-widest uppercase">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-muted to-transparent" />
+        {/* scroll hint */}
+        <div style={{
+          position:"absolute",bottom:24,left:"50%",transform:"translateX(-50%)",
+          display:"flex",flexDirection:"column",alignItems:"center",gap:6,opacity:.35
+        }}>
+          <span style={{fontSize:10,color:"#a0aec0",fontFamily:"JetBrains Mono,monospace",
+            textTransform:"uppercase",letterSpacing:"0.12em"}}>Scroll</span>
+          <div style={{width:1,height:32,
+            background:"linear-gradient(to bottom,#a0aec0,transparent)"}}/>
         </div>
       </div>
     </div>

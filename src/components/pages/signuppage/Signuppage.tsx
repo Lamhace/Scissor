@@ -1,224 +1,206 @@
-import React, { useState } from 'react';
-import GoogleApple from '../../googleApple/GoogleApple';
+import React, { useState } from "react";
+import GoogleApple from "../../googleApple/GoogleApple";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Footer from '../../footer/Footer';
-import { Link, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebaseConfig';
+import Footer from "../../footer/Footer";
+import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../firebaseConfig";
 import { logIn } from "../../../Redux/LoginReducer";
 import { useDispatch } from "react-redux";
-import { FiScissors, FiArrowRight } from 'react-icons/fi';
+import { FiScissors, FiArrowRight } from "react-icons/fi";
+
+/* reusable inline-SVG icons – immune to Tailwind/react-icons size conflicts */
+const iconStyle: React.CSSProperties = {
+  position:"absolute", left:14, top:"50%", transform:"translateY(-50%)",
+  color:"#a0aec0", pointerEvents:"none", zIndex:10
+};
+const UserSVG = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={iconStyle}>
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+);
+const MailSVG = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={iconStyle}>
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+  </svg>
+);
+const LockSVG = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={iconStyle}>
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+  </svg>
+);
+
+const LabelStyle: React.CSSProperties = {
+  display:"block", fontSize:11, fontFamily:"JetBrains Mono,monospace",
+  color:"#a0aec0", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:8
+};
 
 export default function Signuppage() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const [signUpData, setSignUpData] = useState({
-    username: '', password: '', email: '', confirmPassword: ''
-  });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const navigate  = useNavigate();
+  const dispatch  = useDispatch();
+  const [data, setData] = useState({ username:"", email:"", password:"", confirmPassword:"" });
+  const [err, setErr]   = useState("");
+  const [pwErr, setPwErr] = useState("");
+  const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  function signUpChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSignUpData((prev) => ({ ...prev, [event.target.name]: event.target.value }));
-    setErrorMessage('');
-    setPasswordErrorMessage('');
+  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setData(p => ({ ...p, [e.target.name]: e.target.value }));
+    setErr(""); setPwErr("");
   }
 
-  async function submitSignInData(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const hasUppercase = /[A-Z]/.test(signUpData.password);
-    const hasLowercase = /[a-z]/.test(signUpData.password);
-    const hasNumber = /[0-9]/.test(signUpData.password);
-
-    if (signUpData.password.length < 6 || !hasUppercase || !hasLowercase || !hasNumber) {
-      setErrorMessage('Password must be at least 6 characters with uppercase, lowercase, and a number.');
-      return;
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const { password, confirmPassword, email } = data;
+    if (password.length < 6 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+      setErr("Password needs 6+ chars, uppercase, lowercase & a number."); return;
     }
-    if (signUpData.password !== signUpData.confirmPassword) {
-      setPasswordErrorMessage("Passwords don't match. Please try again.");
-      return;
-    }
-
+    if (password !== confirmPassword) { setPwErr("Passwords don't match."); return; }
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, signUpData.email, signUpData.password);
+      await createUserWithEmailAndPassword(auth, email, password);
       dispatch(logIn());
-      // Fix #6: replace so back swipe doesn't return to signup after account creation
-      navigate("/", { replace: true });
-    } catch (error) {
-      setErrorMessage('This email is already registered. Try signing in instead.');
-    } finally {
-      setLoading(false);
-    }
+      navigate("/", { replace: true }); // replace prevents back-swipe returning to signup
+    } catch {
+      setErr("This email is already registered. Try signing in instead.");
+    } finally { setLoading(false); }
   }
 
-  // Reusable icon SVGs as inline so we avoid Tailwind class conflicts with react-icons sizing
-  const UserIcon = () => (
-    <svg className="absolute left-4 text-muted pointer-events-none z-10" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-    </svg>
-  );
-  const MailIcon = () => (
-    <svg className="absolute left-4 text-muted pointer-events-none z-10" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-    </svg>
-  );
-  const LockIcon = () => (
-    <svg className="absolute left-4 text-muted pointer-events-none z-10" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-    </svg>
-  );
+  const fieldWrap: React.CSSProperties = { position:"relative", display:"flex", alignItems:"center" };
 
   return (
     <div className="min-h-screen bg-primary grid-bg flex flex-col">
-      <div className="fixed top-0 right-0 w-96 h-96 bg-secondary opacity-10 rounded-full blur-3xl pointer-events-none" />
-      <div className="fixed bottom-0 left-0 w-80 h-80 bg-neon opacity-5 rounded-full blur-3xl pointer-events-none" />
+      <div style={{position:"fixed",top:0,right:0,width:384,height:384,background:"#6c63ff",
+        opacity:.08,borderRadius:"50%",filter:"blur(80px)",pointerEvents:"none"}}/>
+      <div style={{position:"fixed",bottom:0,left:0,width:320,height:320,background:"#00f5ff",
+        opacity:.04,borderRadius:"50%",filter:"blur(80px)",pointerEvents:"none"}}/>
 
-      {/* Header */}
-      <div className="relative z-10 flex items-center justify-between px-6 py-5 border-b border-white border-opacity-5">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-secondary bg-opacity-20 border border-secondary border-opacity-30 flex items-center justify-center">
-            <FiScissors className="text-secondary text-sm" />
+      <header style={{position:"relative",zIndex:10,display:"flex",alignItems:"center",
+        justifyContent:"space-between",padding:"18px 24px",
+        borderBottom:"1px solid rgba(255,255,255,0.06)"}}>
+        <Link to="/" style={{display:"flex",alignItems:"center",gap:8,textDecoration:"none"}}>
+          <div style={{width:32,height:32,borderRadius:8,background:"rgba(108,99,255,.15)",
+            border:"1px solid rgba(108,99,255,.35)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <FiScissors style={{color:"#6c63ff",fontSize:14}}/>
           </div>
-          <span className="font-display font-bold text-lg text-white">scissor</span>
+          <span style={{fontFamily:"Space Grotesk,sans-serif",fontWeight:700,fontSize:18,color:"#fff"}}>scissor</span>
         </Link>
-        <Link to="/login" className="text-muted text-sm hover:text-white transition-colors">
-          Have an account? <span className="text-secondary font-medium">Sign in</span>
+        <Link to="/login" style={{color:"#a0aec0",fontSize:14,textDecoration:"none"}}>
+          Have an account?&nbsp;<span style={{color:"#6c63ff",fontWeight:600}}>Sign in</span>
         </Link>
-      </div>
+      </header>
 
-      <div className="relative z-10 flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
-          <div className="glass-dark rounded-3xl p-8 border border-white border-opacity-5">
-            <div className="mb-8">
-              <h1 className="font-display font-bold text-3xl text-white mb-2">Create your account</h1>
-              <p className="text-muted text-sm">Start shortening links for free. No credit card needed.</p>
+      <main style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",padding:"40px 16px"}}>
+        <div style={{width:"100%",maxWidth:440}}>
+          <div className="glass-dark" style={{borderRadius:24,padding:"32px 28px"}}>
+            <div style={{marginBottom:24}}>
+              <h1 style={{fontFamily:"Space Grotesk,sans-serif",fontWeight:700,fontSize:"1.65rem",
+                color:"#fff",margin:"0 0 6px"}}>Create your account</h1>
+              <p style={{color:"#a0aec0",fontSize:14,margin:0}}>Start shortening links free. No card needed.</p>
             </div>
 
             <GoogleApple />
 
-            <form onSubmit={submitSignInData} className="space-y-4">
-              {/* Username — Fix #7: paddingLeft clears icon */}
-              <div>
-                <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Username</label>
-                <div className="relative flex items-center">
-                  <UserIcon />
-                  <input
-                    className="scissor-input"
-                    style={{ paddingLeft: "2.75rem" }}
-                    type="text"
-                    placeholder="johndoe"
-                    value={signUpData.username}
-                    onChange={signUpChange}
-                    name="username"
-                    required
-                  />
+            <form onSubmit={onSubmit}>
+              {/* Username */}
+              <div style={{marginBottom:14}}>
+                <label style={LabelStyle}>Username</label>
+                <div style={fieldWrap}>
+                  <UserSVG />
+                  <input className="input-with-icon" type="text" name="username"
+                    value={data.username} onChange={onChange} placeholder="johndoe" required/>
                 </div>
               </div>
 
               {/* Email */}
-              <div>
-                <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Email</label>
-                <div className="relative flex items-center">
-                  <MailIcon />
-                  <input
-                    className="scissor-input"
-                    style={{ paddingLeft: "2.75rem" }}
-                    type="email"
-                    placeholder="you@example.com"
-                    value={signUpData.email}
-                    onChange={signUpChange}
-                    name="email"
-                    required
-                  />
+              <div style={{marginBottom:14}}>
+                <label style={LabelStyle}>Email</label>
+                <div style={fieldWrap}>
+                  <MailSVG />
+                  <input className="input-with-icon" type="email" name="email"
+                    value={data.email} onChange={onChange} placeholder="you@example.com" required/>
                 </div>
               </div>
 
               {/* Password */}
-              <div>
-                <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Password</label>
-                <div className="relative flex items-center">
-                  <LockIcon />
-                  <input
-                    className="scissor-input"
-                    style={{ paddingLeft: "2.75rem", paddingRight: "3rem" }}
-                    type={showPassword ? "text" : "password"}
+              <div style={{marginBottom:14}}>
+                <label style={LabelStyle}>Password</label>
+                <div style={fieldWrap}>
+                  <LockSVG />
+                  <input className="input-with-icon has-right-btn"
+                    type={showPw ? "text" : "password"} name="password"
+                    value={data.password} onChange={onChange}
                     placeholder="Min 6 chars, upper, lower, number"
-                    value={signUpData.password}
-                    onChange={signUpChange}
-                    name="password"
-                    autoComplete="new-password"
-                    required
-                  />
-                  <button type="button" className="absolute right-4 text-muted hover:text-white transition-colors z-10" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    autoComplete="new-password" required/>
+                  <button type="button" onClick={() => setShowPw(!showPw)}
+                    style={{position:"absolute",right:14,background:"none",border:"none",
+                      color:"#a0aec0",cursor:"pointer",padding:0,zIndex:10,display:"flex",alignItems:"center"}}>
+                    {showPw ? <FaEyeSlash/> : <FaEye/>}
                   </button>
                 </div>
               </div>
 
-              {/* Confirm Password */}
-              <div>
-                <label className="block text-xs font-mono text-muted uppercase tracking-widest mb-2">Confirm Password</label>
-                <div className="relative flex items-center">
-                  <LockIcon />
-                  <input
-                    className="scissor-input"
-                    style={{ paddingLeft: "2.75rem", paddingRight: "3rem" }}
-                    type={showPassword ? "text" : "password"}
+              {/* Confirm password */}
+              <div style={{marginBottom:14}}>
+                <label style={LabelStyle}>Confirm Password</label>
+                <div style={fieldWrap}>
+                  <LockSVG />
+                  <input className="input-with-icon has-right-btn"
+                    type={showPw ? "text" : "password"} name="confirmPassword"
+                    value={data.confirmPassword} onChange={onChange}
                     placeholder="Repeat your password"
-                    value={signUpData.confirmPassword}
-                    onChange={signUpChange}
-                    name="confirmPassword"
-                    autoComplete="new-password"
-                    required
-                  />
-                  <button type="button" className="absolute right-4 text-muted hover:text-white transition-colors z-10" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    autoComplete="new-password" required/>
+                  <button type="button" onClick={() => setShowPw(!showPw)}
+                    style={{position:"absolute",right:14,background:"none",border:"none",
+                      color:"#a0aec0",cursor:"pointer",padding:0,zIndex:10,display:"flex",alignItems:"center"}}>
+                    {showPw ? <FaEyeSlash/> : <FaEye/>}
                   </button>
                 </div>
               </div>
 
-              <p className="text-muted text-xs">
-                Use 6+ characters with at least one uppercase, one lowercase, and one number.
+              <p style={{color:"#a0aec0",fontSize:12,marginBottom:12}}>
+                6+ chars · one uppercase · one lowercase · one number
               </p>
 
-              {errorMessage && (
-                <div className="p-3 rounded-xl bg-accent bg-opacity-10 border border-accent border-opacity-30 text-accent text-sm text-center">
-                  {errorMessage}
-                </div>
+              {err && (
+                <div style={{padding:"10px 14px",borderRadius:10,marginBottom:10,
+                  background:"rgba(255,107,107,.1)",border:"1px solid rgba(255,107,107,.3)",
+                  color:"#ff6b6b",fontSize:13,textAlign:"center"}}>{err}</div>
               )}
-              {passwordErrorMessage && (
-                <div className="p-3 rounded-xl bg-accent bg-opacity-10 border border-accent border-opacity-30 text-accent text-sm text-center">
-                  {passwordErrorMessage}
-                </div>
+              {pwErr && (
+                <div style={{padding:"10px 14px",borderRadius:10,marginBottom:10,
+                  background:"rgba(255,107,107,.1)",border:"1px solid rgba(255,107,107,.3)",
+                  color:"#ff6b6b",fontSize:13,textAlign:"center"}}>{pwErr}</div>
               )}
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full btn-primary flex items-center justify-center gap-2 py-4 rounded-xl mt-2"
-              >
-                {loading ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <>Create Account <FiArrowRight /></>
-                )}
+              <button type="submit" disabled={loading} className="btn-primary"
+                style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center",
+                  gap:8,padding:"14px 24px",borderRadius:12,marginTop:4,fontSize:15}}>
+                {loading
+                  ? <div style={{width:20,height:20,border:"2px solid rgba(255,255,255,.3)",
+                      borderTopColor:"#fff",borderRadius:"50%",animation:"spin .7s linear infinite"}}/>
+                  : <><span>Create Account</span><FiArrowRight/></>
+                }
               </button>
             </form>
 
-            <p className="text-center text-muted text-xs mt-6 leading-relaxed">
-              By signing up, you agree to our{" "}
-              <span className="text-secondary hover:underline cursor-pointer">Terms of Service</span> and{" "}
-              <span className="text-secondary hover:underline cursor-pointer">Privacy Policy</span>.
+            <p style={{textAlign:"center",color:"#a0aec0",fontSize:12,marginTop:16,lineHeight:1.6}}>
+              By signing up you agree to our&nbsp;
+              <span style={{color:"#6c63ff",cursor:"pointer"}}>Terms</span>&nbsp;&amp;&nbsp;
+              <span style={{color:"#6c63ff",cursor:"pointer"}}>Privacy Policy</span>.
             </p>
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer />
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   );
 }

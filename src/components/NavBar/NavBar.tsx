@@ -8,10 +8,10 @@ import { closeNav } from "../../Redux/HamburgerReducer";
 import { FiScissors, FiLogOut, FiLogIn } from "react-icons/fi";
 
 const navItems = [
-  { label: "Features", target: "analytics" },
-  { label: "Pricing", target: "subscription" },
-  { label: "Trim URL", target: "trim" },
-  { label: "FAQs", target: "faq" },
+  { label: "Features",  target: "analytics" },
+  { label: "Pricing",   target: "subscription" },
+  { label: "Trim URL",  target: "trim" },
+  { label: "FAQs",      target: "faq" },
 ];
 
 const NavBar = () => {
@@ -23,39 +23,47 @@ const NavBar = () => {
   function logout() {
     dispatch(logOut());
     dispatch(closeNav());
-    // Fix #6: use replace:true so the browser back button skips the logged-in state
+    // replace: back button / swipe cannot return user to the homepage while logged-in
     navigate("/login", { replace: true });
   }
 
   return (
     <nav
-      className={`flex md:flex-row xs:flex-col md:justify-between md:gap-0 xs:gap-10 xs:justify-center items-center px-8 py-4 cursor-pointer xs:fixed xs:h-screen w-full md:sticky md:h-20 z-30 md:bg-transparent xs:bg-primary mobile-nav md:backdrop-blur-none duration-300 ease-linear md:border-b md:border-white md:border-opacity-5 ${
-        isNavOpen
+      className={`
+        flex md:flex-row xs:flex-col
+        md:justify-between md:gap-0 xs:gap-10 xs:justify-center
+        items-center px-8 py-4
+        xs:fixed xs:h-screen w-full md:sticky md:h-20 z-30
+        md:bg-transparent xs:bg-primary mobile-nav md:backdrop-blur-none
+        duration-300 ease-linear
+        md:border-b md:border-white md:border-opacity-5
+        ${isNavOpen
           ? "translate-x-0 xs:visible xs:pointer-events-auto xs:opacity-100"
           : "translate-x-full md:translate-x-0 xs:invisible xs:pointer-events-none xs:opacity-0"
-      }`}
+        }
+      `}
     >
-      {/* Logo — always visible in desktop nav */}
+      {/* Logo */}
       <div className="xs:hidden md:flex items-center gap-2">
-        <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-secondary bg-opacity-20 border border-secondary border-opacity-30">
-          <FiScissors className="text-secondary text-lg" />
+        <div style={{width:36,height:36,borderRadius:10,background:"rgba(108,99,255,.15)",
+          border:"1px solid rgba(108,99,255,.35)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <FiScissors style={{color:"#6c63ff",fontSize:16}}/>
         </div>
-        <span className="font-display font-bold text-xl text-white tracking-tight">
+        <span style={{fontFamily:"Space Grotesk,sans-serif",fontWeight:700,fontSize:20,color:"#fff",letterSpacing:"-0.01em"}}>
           scissor
         </span>
       </div>
 
-      {/* Nav links — always shown for smooth scroll to sections */}
-      <div className="flex md:flex-row xs:flex-col items-center lg:gap-8 md:gap-6 xs:gap-6 text-sm font-medium">
-        {navItems.map((item) => (
+      {/* Nav links – smooth scroll to page sections */}
+      <div className="flex md:flex-row xs:flex-col items-center lg:gap-8 md:gap-6 xs:gap-6">
+        {navItems.map(item => (
           <Link
             key={item.label}
             to={item.target}
-            spy={true}
-            smooth={true}
-            duration={800}
+            spy smooth duration={800}
             onClick={() => dispatch(closeNav())}
-            className="nav-link text-sm font-medium"
+            className="nav-link"
+            style={{fontSize:14,fontWeight:500}}
           >
             {item.label}
           </Link>
@@ -65,26 +73,37 @@ const NavBar = () => {
       {/* Auth area */}
       <div className="flex md:flex-row xs:flex-col items-center gap-3">
         {isLoggedIn ? (
-          /* Fix #5: Clear logout button when user is signed in */
+          /* Logout – only this button should ever send user to login page */
           <button
             onClick={logout}
-            className="flex items-center gap-2 text-sm font-semibold text-muted hover:text-accent transition-colors duration-200 border border-white border-opacity-10 rounded-full px-4 py-2 hover:border-accent hover:border-opacity-40"
+            style={{
+              display:"flex",alignItems:"center",gap:7,
+              background:"rgba(255,107,107,.1)",border:"1px solid rgba(255,107,107,.3)",
+              color:"#ff6b6b",padding:"8px 18px",borderRadius:999,
+              fontFamily:"Space Grotesk,sans-serif",fontWeight:600,fontSize:13,
+              cursor:"pointer",transition:"all .25s"
+            }}
           >
-            <FiLogOut className="text-base" />
+            <FiLogOut style={{fontSize:14}}/>
             Log Out
           </button>
         ) : (
           <>
             <button
               onClick={() => { dispatch(closeNav()); navigate("/login"); }}
-              className="flex items-center gap-2 text-sm font-medium text-muted hover:text-white transition-colors duration-200"
+              style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",
+                color:"#a0aec0",cursor:"pointer",fontSize:14,fontWeight:500,padding:"4px 0",
+                fontFamily:"DM Sans,sans-serif",transition:"color .2s"}}
+              onMouseOver={e => (e.currentTarget.style.color="#fff")}
+              onMouseOut={e  => (e.currentTarget.style.color="#a0aec0")}
             >
-              <FiLogIn className="text-base" />
+              <FiLogIn style={{fontSize:15}}/>
               Sign In
             </button>
             <button
               onClick={() => { dispatch(closeNav()); navigate("/signup"); }}
-              className="btn-primary text-sm py-2.5 px-5"
+              className="btn-primary"
+              style={{padding:"9px 20px",fontSize:13}}
             >
               Try for free
             </button>
