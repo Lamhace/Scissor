@@ -29,7 +29,12 @@ const NavBar: React.FC = () => {
   };
   const close = () => dispatch(closeNav());
 
-  /* ── Mobile: only the full-screen slide-in overlay ── */
+  /* ─────────────────────────────────────────────────────────────────
+     MOBILE  (<768px) — full-screen slide-in overlay.
+     Nav links are always shown. When logged in, Log Out appears
+     among the links (below the divider). When logged out, Sign In
+     and Try for free appear instead.
+  ───────────────────────────────────────────────────────────────── */
   if (isMobile) {
     return (
       <div style={{
@@ -43,38 +48,73 @@ const NavBar: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: 32,
+        gap: 28,
         transform: isNavOpen ? "translateX(0)" : "translateX(100%)",
         transition: "transform 0.32s cubic-bezier(0.4,0,0.2,1)",
         pointerEvents: isNavOpen ? "auto" : "none",
       }}>
+
+        {/* Nav links */}
         {navItems.map(item => (
-          <Link key={item.label} to={item.target} spy smooth duration={800}
+          <Link
+            key={item.label}
+            to={item.target}
+            spy smooth duration={800}
             onClick={close}
             style={{
               fontSize: 22, fontWeight: 600,
               color: "rgba(255,255,255,0.85)",
               fontFamily: "Space Grotesk,sans-serif",
               cursor: "pointer", textDecoration: "none",
-            }}>
+              letterSpacing: "-0.01em",
+            }}
+          >
             {item.label}
           </Link>
         ))}
 
-        <div style={{ width: 48, height: 1, background: "rgba(255,255,255,0.1)" }} />
+        {/* Divider */}
+        <div style={{ width: 48, height: 1, background: "rgba(255,255,255,0.12)" }} />
 
-        {/* Mobile menu: Sign In only (no logout — logout lives in the top bar) */}
-        {!isLoggedIn && (
+        {/* Auth section — Log Out when logged in, Sign In / Try Free when logged out */}
+        {isLoggedIn ? (
+          /* Log Out button displayed among the nav items when user is authenticated */
+          <button
+            onClick={logout}
+            style={{
+              display: "flex", alignItems: "center", gap: 10,
+              background: "rgba(255,107,107,.12)",
+              border: "1px solid rgba(255,107,107,.3)",
+              color: "#ff6b6b",
+              padding: "13px 36px",
+              borderRadius: 999,
+              fontFamily: "Space Grotesk,sans-serif",
+              fontWeight: 600,
+              fontSize: 18,
+              cursor: "pointer",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            <FiLogOut style={{ fontSize: 18 }} />
+            Log Out
+          </button>
+        ) : (
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
-            <button onClick={() => { close(); navigate("/login"); }} style={{
-              background: "none", border: "none", color: "#a0aec0", cursor: "pointer",
-              fontSize: 16, fontWeight: 500, fontFamily: "DM Sans,sans-serif",
-              display: "flex", alignItems: "center", gap: 6,
-            }}>
-              <FiLogIn style={{ fontSize: 16 }} /> Sign In
+            <button
+              onClick={() => { close(); navigate("/login"); }}
+              style={{
+                background: "none", border: "none", color: "#a0aec0", cursor: "pointer",
+                fontSize: 18, fontWeight: 500, fontFamily: "DM Sans,sans-serif",
+                display: "flex", alignItems: "center", gap: 8,
+              }}
+            >
+              <FiLogIn style={{ fontSize: 18 }} /> Sign In
             </button>
-            <button onClick={() => { close(); navigate("/signup"); }}
-              className="btn-primary" style={{ padding: "12px 40px", fontSize: 15 }}>
+            <button
+              onClick={() => { close(); navigate("/signup"); }}
+              className="btn-primary"
+              style={{ padding: "13px 44px", fontSize: 16 }}
+            >
               Try for free
             </button>
           </div>
@@ -83,7 +123,11 @@ const NavBar: React.FC = () => {
     );
   }
 
-  /* ── Desktop: horizontal sticky nav bar ── */
+  /* ─────────────────────────────────────────────────────────────────
+     DESKTOP  (≥768px) — horizontal sticky bar.
+     Rendered as the first child of Homepage, above <Hero />,
+     so position:sticky works correctly (no overflow:hidden parent).
+  ───────────────────────────────────────────────────────────────── */
   return (
     <nav style={{
       display: "flex",
@@ -94,11 +138,11 @@ const NavBar: React.FC = () => {
       width: "100%",
       position: "sticky",
       top: 0,
-      zIndex: 40,
+      zIndex: 50,
       borderBottom: "1px solid rgba(255,255,255,0.06)",
-      background: "rgba(10,10,15,0.6)",
-      backdropFilter: "blur(18px)",
-      WebkitBackdropFilter: "blur(18px)",
+      background: "rgba(10,10,15,0.65)",
+      backdropFilter: "blur(20px)",
+      WebkitBackdropFilter: "blur(20px)",
     }}>
       {/* Logo */}
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -125,7 +169,7 @@ const NavBar: React.FC = () => {
         ))}
       </div>
 
-      {/* Auth — Sign In visible on desktop when logged out (issue #2) */}
+      {/* Auth */}
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         {isLoggedIn ? (
           <button onClick={logout} style={{
