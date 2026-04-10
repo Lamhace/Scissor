@@ -1,25 +1,27 @@
-# Scissor — Patch v7
+# Scissor — Patch v8 (Persist login across page refresh)
 
-## Files to replace
+## File to replace
+  src/App.tsx
 
-  public/favicon.ico                        ← replace with uploaded scissor icon
-  public/index.html                         ← updated to point to new favicon.ico
-  src/components/NavBar/NavBar.tsx          ← logout button added to mobile menu
+## What was wrong
+Redux state is stored in memory only. Every page refresh resets it to the
+initial state, which has `isLoggedIn: false`. So even though the user was
+genuinely logged in, a refresh would immediately show them as logged out.
 
-## Changes
+Firebase actually DOES persist the session — it saves the auth token in
+IndexedDB/localStorage automatically. The problem was simply that Redux
+never knew about it after a reload.
 
-### 1. Favicon
-The uploaded scissor_favicon.ico (multi-size: 16×16 and 32×32) replaces
-the old placeholder. index.html now points directly to favicon.ico — the
-SVG data-URI fallback has been removed since the real icon is now supplied.
+## The fix — AuthSync component
+A new `AuthSync` wrapper component is added inside `<Router>`. On mount it
+calls Firebase's `onAuthStateChanged` observer. Firebase re-emits the current
+user almost immediately after a refresh (from its persisted cache). AuthSync
+then dispatches `logIn()` or `logOut()` to Redux to match.
 
-### 2. Mobile hamburger menu — Log Out among nav links
-When the hamburger is opened on mobile and the user IS logged in:
-  • The four nav links (Features, Pricing, Trim URL, FAQs) show as before
-  • A divider line appears below them
-  • A red "Log Out" button appears below the divider, styled the same size
-    as the nav link text so it reads as part of the menu — not a separate
-    footer element
+While Firebase is resolving its persisted session (usually under 200ms),
+AuthSync renders nothing — this prevents a one-frame flash of a logged-out
+UI before the state is confirmed.
 
-When the user is NOT logged in, the divider is followed by Sign In and
-Try for free (unchanged from before).
+The `GuestRoute` guard (which prevents back-swipe to login/signup) continues
+to work correctly because it reads from Redux, which is now always in sync
+with Firebase's real auth state.
