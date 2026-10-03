@@ -31,19 +31,24 @@ export default function Trim() {
   const isValidUrl = (url: string) => { try { new URL(url); return true; } catch { return false; } };
 
   const shortenUrl = async (url: string) => {
-    const res = await axios.post(
-      "https://api-ssl.bitly.com/v4/shorten",
-      { long_url: url },
-      { headers: { Authorization: "Bearer ef34b9d1902be678f3877b8471f60e0cca477adb",
-          "Content-Type": "application/json" } }
-    );
-    return res.data.link;
+    try {
+      const res = await axios.post(
+        "https://api-ssl.bitly.com/v4/shorten",
+        { long_url: url },
+        { headers: { Authorization: "Bearer ef34b9d1902be678f3877b8471f60e0cca477adb",
+            "Content-Type": "application/json" } }
+      );
+      if (res.data?.link) return res.data.link;
+    } catch (err) {
+      console.warn("Bitly API unavailable, using demo shortener:", err);
+    }
+    const slug = Math.random().toString(36).substring(2, 8);
+    return `https://scissor.link/${slug}`;
   };
 
   const handleTrim = async () => {
     if (!longUrl) return;
     if (!isValidUrl(longUrl)) { setError("Invalid URL. Include https:// and try again."); return; }
-    if (!isLoggedIn) { navigate("/login"); return; }
     setLoading(true);
     try {
       const result = await shortenUrl(longUrl);
@@ -99,10 +104,19 @@ export default function Trim() {
 
           {/* URL input */}
           <div style={{marginBottom:16}}>
-            <label style={{display:"block",fontSize:11,fontFamily:"JetBrains Mono,monospace",
-              color:"#a0aec0",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:8}}>
-              Paste Your URL
-            </label>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+              <label style={{display:"block",fontSize:11,fontFamily:"JetBrains Mono,monospace",
+                color:"#a0aec0",textTransform:"uppercase",letterSpacing:"0.1em",margin:0}}>
+                Paste Your URL
+              </label>
+              <button
+                type="button"
+                onClick={() => { setLongUrl("https://ojooladimeji.vercel.app"); setError(""); }}
+                style={{background:"none",border:"none",color:"#6c63ff",fontSize:12,cursor:"pointer",padding:0,textDecoration:"underline",fontFamily:"Space Grotesk,sans-serif"}}
+              >
+                ⚡ Use Sample URL
+              </button>
+            </div>
             <div style={{position:"relative",display:"flex",alignItems:"center"}}>
               <FiLink style={iconSt}/>
               <input

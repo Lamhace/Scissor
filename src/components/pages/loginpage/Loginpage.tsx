@@ -183,6 +183,35 @@ export default function Loginpage() {
                   : <><span>Sign In</span><FiArrowRight /></>
                 }
               </button>
+
+              {/* Instant Guest Demo */}
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch(logIn());
+                  navigate("/");
+                }}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  padding: "12px 24px",
+                  borderRadius: 12,
+                  marginTop: 10,
+                  fontSize: 14,
+                  background: "rgba(255, 255, 255, 0.05)",
+                  border: "1px solid rgba(255, 255, 255, 0.15)",
+                  color: "#e2e8f0",
+                  cursor: "pointer",
+                  fontFamily: "Space Grotesk, sans-serif",
+                  fontWeight: 600,
+                  transition: "all 0.2s"
+                }}
+              >
+                ⚡ Explore as Guest (Instant Demo)
+              </button>
             </form>
 
             <p style={{textAlign:"center",color:"#a0aec0",fontSize:14,marginTop:20}}>
